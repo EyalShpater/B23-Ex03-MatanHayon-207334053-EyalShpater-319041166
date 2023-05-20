@@ -5,7 +5,12 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal enum eColor
+    public enum eColor
     {
+        White,
+        Black,
+        Yellow,
+        Red
     }
+
 }

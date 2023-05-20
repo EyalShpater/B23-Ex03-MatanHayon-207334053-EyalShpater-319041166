@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
-    internal class FuelEngine
+    internal class FuelEngine : Engine
     {
+        private readonly eFuelType r_FuelType;
+
+        internal void AddFuel(float i_AmountToAdd, eFuelType i_FuelType)
+        {
+
+        }
     }
 }

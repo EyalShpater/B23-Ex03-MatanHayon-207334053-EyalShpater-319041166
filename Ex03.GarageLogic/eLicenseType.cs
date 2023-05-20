@@ -5,13 +5,12 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public enum eVehicleType
+    public enum eLicenseType
     {
-        ElectricCar,
-        FuelCar,
-        ElectricMotorCycle,
-        FuelMotorCycle,
-        Truck
+        A1,
+        A2,
+        AA,
+        B1
     }
 
 }

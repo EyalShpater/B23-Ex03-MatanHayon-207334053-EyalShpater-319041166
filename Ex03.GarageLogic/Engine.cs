@@ -1,11 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
-    internal abstract class Engine
+    public abstract class Engine
     {
+        protected float m_CurrentEnergyLevel;
+        protected readonly float m_MaxCapacity;
+
+        public float CurrentEnergyLevel
+        { 
+            get 
+            { 
+                return m_CurrentEnergyLevel; 
+            } 
+
+            set 
+            {
+                m_CurrentEnergyLevel = value;   
+            }
+        }
+
+        public float MaxCapacity
+        {
+            get
+            {
+                return m_MaxCapacity;
+            }
+        }
     }
+
 }

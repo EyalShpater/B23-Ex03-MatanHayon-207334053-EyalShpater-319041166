@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal class VehicleFactory
+    public class VehicleFactory
     {
+        public Vehicle CreateNewVehicle(eVehicleType type)
+        {
+        }
     }
+
 }

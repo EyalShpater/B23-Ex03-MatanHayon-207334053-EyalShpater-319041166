@@ -5,7 +5,11 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    internal class eStatus
+    public enum eStatus
     {
+        InRepair,
+        Completed,
+        Paid
     }
+
 }

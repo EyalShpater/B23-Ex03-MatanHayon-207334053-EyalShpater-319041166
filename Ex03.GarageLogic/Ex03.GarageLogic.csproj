@@ -39,7 +39,7 @@
     <Compile Include="eColor.cs" />
     <Compile Include="eFuelType.cs" />
     <Compile Include="ElectricEngine.cs" />
-    <Compile Include="eLicenesType.cs" />
+    <Compile Include="eLicenseType.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="eStatus.cs" />
     <Compile Include="eVehicleType.cs" />
@@ -48,6 +48,7 @@
     <Compile Include="MotorCycle.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Truck.cs" />
+    <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleFactory.cs" />
     <Compile Include="Wheel.cs" />
