@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -84,5 +85,28 @@ namespace Ex03.GarageLogic
         {
             m_EnergyLevel = (r_Engine.CurrentEnergyLevel / r_Engine.MaxCapacity) * 100;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat(
+        @"Model: {0}
+License Number: {1}
+Energy Level: {2}%
+{3}
+", m_Model, m_LicenseNumber, m_EnergyLevel, r_Engine.ToString());
+
+            int wheelNumber = 0;
+            foreach (Wheel wheel in m_Wheels)
+            {
+                wheelNumber++;
+                sb.AppendFormat("Wheel number: {0}{1}{2}", wheelNumber, Environment.NewLine, wheel.ToString());
+            }
+
+            return sb.ToString();
+        }
+
+
     }
 }

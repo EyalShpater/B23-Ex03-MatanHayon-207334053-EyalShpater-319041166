@@ -37,5 +37,18 @@ namespace Ex03.GarageLogic
             IsDangerousMaterials = bool.Parse(i_Attributes[0]);
             CargoVolume = float.Parse(i_Attributes[1]);
         }
+
+        public override string ToString()
+        { 
+           StringBuilder res = new StringBuilder();
+
+            res.AppendLine(base.ToString());
+            res.AppendLine(string.Format(
+@"{0} Dangerous materials.
+Cargo Voulme: {1}",
+                m_IsDangerousMaterials ? "Has" : "Doesn't has", m_CargoVolume));
+         
+            return res.ToString();
+        }
     }
 }

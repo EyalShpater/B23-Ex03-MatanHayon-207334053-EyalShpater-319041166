@@ -10,16 +10,20 @@ namespace Ex03.GarageLogic
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
+        public MotorCycle(bool i_IsElectric) : base(i_IsElectric)
+        {
+            m_LicenseType = 0;
+            m_EngineVolume = 0;
+        }
+
         public eLicenseType LicenseType
         {
             get { return m_LicenseType; }
-            set { m_LicenseType = value; }
         }
 
         public int EngineVolume
         {
             get { return m_EngineVolume; }
-            set { m_EngineVolume = value; }
         }
 
         public override string[] GetUniqueAttributes()
@@ -34,8 +38,21 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Invalid number of attributes.");
             }
 
-            LicenseType = (eLicenseType)Enum.Parse(typeof(eLicenseType), i_Attributes[0]);
-            EngineVolume = int.Parse(i_Attributes[1]);
+            m_LicenseType = (eLicenseType)Enum.Parse(typeof(eLicenseType), i_Attributes[0]);
+            m_EngineVolume = int.Parse(i_Attributes[1]);
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+        @"Motorcycle:
+{0}
+License Type: {1}
+Engine Volume: {2}
+", base.ToString(), LicenseType, EngineVolume);
+        }
+
+
+
     }
 }

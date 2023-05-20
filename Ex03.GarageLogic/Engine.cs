@@ -25,6 +25,13 @@
                 return m_MaxCapacity;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Current Energy Level: {0}{1}Max Capacity: {2}",
+                m_CurrentEnergyLevel, "\n", m_MaxCapacity);
+        }
+
     }
 
 }

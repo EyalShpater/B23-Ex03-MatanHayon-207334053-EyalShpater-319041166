@@ -33,5 +33,14 @@
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0);
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+    @"Manufacturer Name: {0}
+Current Air Pressure: {1}
+Max Air Pressure: {2}
+", r_ManufacturerName, m_CurrentAirPressure, r_MaxAirPressure);
+        }
     }
 }

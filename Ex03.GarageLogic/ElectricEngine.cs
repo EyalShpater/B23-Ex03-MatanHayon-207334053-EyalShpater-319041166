@@ -4,7 +4,7 @@
     {
         internal void AddEnergy(float i_EnergyToAdd)
         {
-            if(this.CurrentEnergyLevel+i_EnergyToAdd>m_MaxCapacity)
+            if  (this.CurrentEnergyLevel  +  i_EnergyToAdd  >  m_MaxCapacity)  
             {
                 //throw exception
             }
@@ -12,6 +12,12 @@
             {
                 this.CurrentEnergyLevel += i_EnergyToAdd;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Electric Engine: {0}",base.ToString());
+
         }
     }
 }
