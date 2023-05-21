@@ -7,6 +7,7 @@ namespace Ex03.GarageLogic
 {
     public class MotorCycle : Vehicle
     {
+        private const int k_NumOfAttributes = 2;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
@@ -18,12 +19,35 @@ namespace Ex03.GarageLogic
 
         public eLicenseType LicenseType
         {
-            get { return m_LicenseType; }
+            get 
+            { 
+                return m_LicenseType; 
+            }
+
+            private set 
+            { 
+                m_LicenseType = value; 
+            }
         }
 
         public int EngineVolume
         {
-            get { return m_EngineVolume; }
+            get 
+            { 
+                return m_EngineVolume; 
+            }
+
+            private set
+            {
+                if (value > 0)
+                {
+                    m_EngineVolume = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(null, 0);
+                }
+            }
         }
 
         public override string[] GetUniqueAttributes()
@@ -33,26 +57,26 @@ namespace Ex03.GarageLogic
 
         public override void SetUniqueAttributes(string[] i_Attributes)
         {
-            if (i_Attributes.Length != 2)
+            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
+            if (eLicenseType.TryParse(i_Attributes[0], out eLicenseType licenseType) && int.TryParse(i_Attributes[1], out int engineVolume))
             {
-                throw new ArgumentException("Invalid number of attributes.");
+                LicenseType = licenseType;
+                EngineVolume = engineVolume;
             }
-
-            m_LicenseType = (eLicenseType)Enum.Parse(typeof(eLicenseType), i_Attributes[0]);
-            m_EngineVolume = int.Parse(i_Attributes[1]);
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         public override string ToString()
         {
             return string.Format(
-        @"Motorcycle:
+@"Motorcycle:
 {0}
 License Type: {1}
 Engine Volume: {2}
 ", base.ToString(), LicenseType, EngineVolume);
         }
-
-
-
     }
 }

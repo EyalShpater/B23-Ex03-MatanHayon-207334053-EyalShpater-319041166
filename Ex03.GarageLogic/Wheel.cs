@@ -1,10 +1,12 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+namespace Ex03.GarageLogic
+
 {
     internal class Wheel
     {
-        private readonly string r_ManufacturerName;
+        private string m_ManufacturerName;
         private float m_CurrentAirPressure;
-        private readonly float r_MaxAirPressure;
+        private float m_MaxAirPressure;
 
         internal float CurrentAirPressure
         {
@@ -18,7 +20,39 @@
         {
             get
             {
-                return r_MaxAirPressure;
+                return m_MaxAirPressure;
+            }
+
+            set
+            {
+                if (value > 0)
+                {
+                    m_MaxAirPressure = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(null, 0);
+                }
+            }
+        }
+
+        internal string ManufacturerName
+        {
+            get
+            {
+                return m_ManufacturerName;
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    m_ManufacturerName = value;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
             }
         }
 
@@ -26,13 +60,13 @@
         {
             float newAirPressure = i_AirToAdd + m_CurrentAirPressure;
 
-            if (newAirPressure <= r_MaxAirPressure && newAirPressure >= 0)
+            if (newAirPressure <= m_MaxAirPressure && newAirPressure >= 0)
             {
                 m_CurrentAirPressure = newAirPressure;
             }
             else
             {
-                throw new ValueOutOfRangeException(r_MaxAirPressure, 0);
+                throw new ValueOutOfRangeException(m_MaxAirPressure, 0);
             }
         }
 
@@ -42,7 +76,7 @@
     @"Manufacturer Name: {0}
 Current Air Pressure: {1}
 Max Air Pressure: {2}
-", r_ManufacturerName, m_CurrentAirPressure, r_MaxAirPressure);
+", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
         }
     }
 }

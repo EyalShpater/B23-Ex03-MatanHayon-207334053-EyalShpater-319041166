@@ -3,7 +3,7 @@
     public abstract class Engine
     {
         protected float m_CurrentEnergyLevel;
-        protected readonly float m_MaxCapacity;
+        protected float m_MaxCapacity;
 
         public float CurrentEnergyLevel
         { 
@@ -14,7 +14,14 @@
 
             set 
             {
-                m_CurrentEnergyLevel = value;   
+                if(value >= 0)
+                {
+                    m_CurrentEnergyLevel = value;   
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(m_MaxCapacity, 0);
+                }
             }
         }
 
@@ -23,6 +30,18 @@
             get
             {
                 return m_MaxCapacity;
+            }
+
+            set
+            {
+                if (value > 0)
+                {
+                    m_MaxCapacity = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(null, 0);
+                } 
             }
         }
 

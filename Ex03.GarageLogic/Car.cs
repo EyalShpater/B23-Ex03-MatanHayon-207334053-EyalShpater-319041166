@@ -5,19 +5,43 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
+        private const int k_MinNumOfDoors = 2;
+        private const int k_MaxNumOfDoors = 5;
+        private const int k_NumOfAttributes = 2;
         private eColor m_Color;
         private int m_NumOfDoors;
 
         public eColor Color
         {
-            get { return m_Color; }
-            set { m_Color = value; }
+            get 
+            { 
+                return m_Color; 
+            }
+
+            set 
+            { 
+                m_Color = value; 
+            }
         }
 
         public int NumOfDoors
         {
-            get { return m_NumOfDoors; }
-            set { m_NumOfDoors = value; }
+            get 
+            { 
+                return m_NumOfDoors; 
+            }
+
+            set 
+            {
+                if (value >= k_MinNumOfDoors && value <= k_MaxNumOfDoors)
+                {
+                    m_NumOfDoors = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(k_MaxNumOfDoors, k_MinNumOfDoors);
+                }
+            }
         }
 
         public Car(bool i_IsElectric) : base(i_IsElectric)
@@ -31,15 +55,18 @@ namespace Ex03.GarageLogic
             return new string[] { "Color", "NumOfDoors" };
         }
 
-        public override void SetUniqueAttributes(string[] attributes)
+        public override void SetUniqueAttributes(string[] i_Attributes)
         {
-            if (attributes.Length != 2) //needs to be updates check input
+            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
+            if (eColor.TryParse(i_Attributes[0], out eColor color) && int.TryParse(i_Attributes[1], out int numOfDoors))
             {
-                throw new ArgumentException("Invalid number of attributes.");
+                m_Color = color;
+                m_NumOfDoors = numOfDoors; 
             }
-
-            Color = (eColor)Enum.Parse(typeof(eColor), attributes[0]);
-            NumOfDoors = int.Parse(attributes[1]);
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         public override string ToString()

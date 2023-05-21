@@ -6,6 +6,8 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
+        const int k_MaxLicenseLength = 8;
+        const int k_MaxModelLength = 30;
         protected string m_Model;
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
@@ -35,6 +37,24 @@ namespace Ex03.GarageLogic
             {
                 return m_LicenseNumber;
             }
+            private set
+            {
+                if (value.Length <= k_MaxLicenseLength && value.Length > 0) 
+                {
+                    if (int.TryParse(value, out int dummyInt))
+                    {
+                        m_LicenseNumber = value;
+                    }
+                    else
+                    {
+                        throw new FormatException();
+                    }
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(k_MaxLicenseLength, 1);
+                }
+            }
         }
 
         public float EnergyLevel
@@ -42,6 +62,25 @@ namespace Ex03.GarageLogic
             get 
             { 
                 return m_EnergyLevel; 
+            }
+        }
+
+        public string Model
+        {
+            get 
+            { 
+                return m_Model; 
+            }
+            private set
+            {
+                if (value.Length >= 1)
+                {
+                    m_Model = value; 
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(k_MaxModelLength, 1);
+                }
             }
         }
 
@@ -81,6 +120,16 @@ namespace Ex03.GarageLogic
 
         public abstract void SetUniqueAttributes(string[] i_Features);
 
+        public void SetWheelsAttributes(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+        {
+            foreach(Wheel wheel in m_Wheels)
+            {
+                wheel.ManufacturerName = i_ManufacturerName;
+                wheel.MaxAirPressure = i_MaxAirPressure;
+                wheel.AddAir(i_CurrentAirPressure);
+            }
+        }
+
         private void updateEnergyPercentage()
         {
             m_EnergyLevel = (r_Engine.CurrentEnergyLevel / r_Engine.MaxCapacity) * 100;
@@ -107,6 +156,12 @@ Energy Level: {2}%
             return sb.ToString();
         }
 
-
+        protected void ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(int i_Expected, int i_Actual)
+        {
+            if (i_Expected != i_Actual)
+            {
+                throw new ArgumentException("Invalid number of attributes.");
+            }
+        }
     }
 }
