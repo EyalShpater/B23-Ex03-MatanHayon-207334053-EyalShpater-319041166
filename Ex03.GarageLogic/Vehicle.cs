@@ -49,7 +49,7 @@ namespace Ex03.GarageLogic
         {
             if (r_Engine is ElectricEngine engine)
             {
-                engine.AddEnergy(i_EnergyToAdd);
+                engine.Charge(i_EnergyToAdd);
             }
             else
             {

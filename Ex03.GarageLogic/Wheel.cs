@@ -24,9 +24,11 @@
 
         internal void AddAir(float i_AirToAdd)
         {
-            if (i_AirToAdd + m_CurrentAirPressure <= r_MaxAirPressure)
+            float newAirPressure = i_AirToAdd + m_CurrentAirPressure;
+
+            if (newAirPressure <= r_MaxAirPressure && newAirPressure >= 0)
             {
-                m_CurrentAirPressure += i_AirToAdd;
+                m_CurrentAirPressure = newAirPressure;
             }
             else
             {

@@ -2,16 +2,9 @@
 {
     internal class ElectricEngine : Engine
     {
-        internal void AddEnergy(float i_EnergyToAdd)
+        internal void Charge(float i_EnergyToAdd)
         {
-            if  (this.CurrentEnergyLevel  +  i_EnergyToAdd  >  m_MaxCapacity)  
-            {
-                //throw exception
-            }
-            else
-            {
-                this.CurrentEnergyLevel += i_EnergyToAdd;
-            }
+            base.AddEnergy(i_EnergyToAdd);
         }
 
         public override string ToString()
