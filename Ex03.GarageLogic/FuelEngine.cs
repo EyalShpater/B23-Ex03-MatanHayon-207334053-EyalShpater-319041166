@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+
+namespace Ex03.GarageLogic
 {
     internal class FuelEngine : Engine
     {
@@ -12,7 +14,7 @@
             }
             else
             {
-                //throw exception
+                throw new ArgumentException(string.Format("Wrong Fuel Type! Fuel Type must be {0}!", r_FuelType.ToString()));
             }
         }
 
