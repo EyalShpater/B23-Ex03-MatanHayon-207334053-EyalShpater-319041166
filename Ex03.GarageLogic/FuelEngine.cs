@@ -4,7 +4,12 @@ namespace Ex03.GarageLogic
 {
     internal class FuelEngine : Engine
     {
-        private readonly eFuelType r_FuelType;
+        private eFuelType r_FuelType;
+        public eFuelType FuelType
+        {
+            get { return r_FuelType; }
+            set { r_FuelType = value; }
+        }
 
         internal void AddFuel(float i_AmountToAdd, eFuelType i_FuelTypeToAdd)
         {

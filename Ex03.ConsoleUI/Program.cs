@@ -4,7 +4,8 @@
     {
         public static void Main()
         {
-            
+            ConsoleUI garage = new ConsoleUI();
+            garage.Run();
         }
     }
 }

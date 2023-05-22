@@ -52,13 +52,16 @@ namespace Ex03.GarageLogic
 
         public override string[] GetUniqueAttributes()
         {
-            return new string[] { "Color", "NumOfDoors" };
+            return new string[] { "Colour", "Number Of Doors" };
         }
 
         public override void SetUniqueAttributes(string[] i_Attributes)
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
-            if (eColor.TryParse(i_Attributes[0], out eColor color) && int.TryParse(i_Attributes[1], out int numOfDoors))
+
+            this.LicenseNumber = i_Attributes[0];
+
+            if (eColor.TryParse(i_Attributes[1], out eColor color) && int.TryParse(i_Attributes[2], out int numOfDoors))
             {
                 m_Color = color;
                 m_NumOfDoors = numOfDoors; 

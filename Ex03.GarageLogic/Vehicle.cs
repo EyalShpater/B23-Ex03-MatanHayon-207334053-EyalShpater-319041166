@@ -12,17 +12,17 @@ namespace Ex03.GarageLogic
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
         List<Wheel> m_Wheels;
-        protected readonly Engine r_Engine;
+        protected Engine m_Engine;
 
         public Vehicle(bool i_IsElectricEngine)
         {
             if (i_IsElectricEngine)
             {
-                r_Engine = new ElectricEngine();
+                m_Engine = new ElectricEngine();
             }
             else
             {
-                r_Engine = new FuelEngine();
+                m_Engine = new FuelEngine();
             }
 
             m_Model = null;
@@ -30,6 +30,24 @@ namespace Ex03.GarageLogic
             m_EnergyLevel = 0;
             m_Wheels = null;
         }
+        
+        public void setConstData(bool i_IsElectric, int i_NumOfWheels, float i_MaxAirPressure, float i_MaxEngineCapacity, eFuelType i_eFuelType)
+        {   //without i_iselectirc?
+            m_Engine.MaxCapacity = i_MaxEngineCapacity;
+            if (!i_IsElectric && m_Engine is FuelEngine fuelEngine)
+            {
+                fuelEngine.FuelType = i_eFuelType;
+            }
+
+            m_Wheels = new List<Wheel>(i_NumOfWheels);
+            foreach (Wheel wheel in m_Wheels)
+            {
+                wheel.MaxAirPressure = i_MaxAirPressure;
+            }
+
+
+        }
+
 
         public string LicenseNumber
         {
@@ -37,7 +55,7 @@ namespace Ex03.GarageLogic
             {
                 return m_LicenseNumber;
             }
-            private set
+            set
             {
                 if (value.Length <= k_MaxLicenseLength && value.Length > 0) 
                 {
@@ -86,7 +104,7 @@ namespace Ex03.GarageLogic
 
         internal void AddEnergy(float i_EnergyToAdd)
         {
-            if (r_Engine is ElectricEngine engine)
+            if (m_Engine is ElectricEngine engine)
             {
                 engine.Charge(i_EnergyToAdd);
             }
@@ -98,7 +116,7 @@ namespace Ex03.GarageLogic
 
         internal void AddEnergy(float i_EnergyToAdd, eFuelType i_FuelType)
         {
-            if (r_Engine is FuelEngine engine)
+            if (m_Engine is FuelEngine engine)
             {
                 engine.AddFuel(i_EnergyToAdd, i_FuelType);
             }
@@ -132,7 +150,7 @@ namespace Ex03.GarageLogic
 
         private void updateEnergyPercentage()
         {
-            m_EnergyLevel = (r_Engine.CurrentEnergyLevel / r_Engine.MaxCapacity) * 100;
+            m_EnergyLevel = (m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity) * 100;
         }
 
         public override string ToString()
@@ -144,7 +162,7 @@ namespace Ex03.GarageLogic
 License Number: {1}
 Energy Level: {2}%
 {3}
-", m_Model, m_LicenseNumber, m_EnergyLevel, r_Engine.ToString());
+", m_Model, m_LicenseNumber, m_EnergyLevel, m_Engine.ToString());
 
             int wheelNumber = 0;
             foreach (Wheel wheel in m_Wheels)

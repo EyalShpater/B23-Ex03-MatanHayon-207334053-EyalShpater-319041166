@@ -2,13 +2,21 @@
 
 namespace Ex03.GarageLogic
 {
-    internal class Order
+    public class Order
     {
         private const int k_PhoneNumberLength = 10;
         private Vehicle m_Vehicle;
         private string m_CustomerName;
         private string m_PhoneNumber;
         private eStatus m_Status;
+
+        public Order()
+        {
+            m_Vehicle = null;
+            m_CustomerName = null;
+            m_PhoneNumber = null;
+            m_Status = 0;
+        }
 
         public Vehicle Vehicle
         {

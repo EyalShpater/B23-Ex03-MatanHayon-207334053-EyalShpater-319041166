@@ -4,7 +4,7 @@ namespace Ex03.GarageLogic
 {
     public class VehicleFactory
     {
-        public Vehicle CreateNewVehicle(eVehicleType i_Type)
+        public static Vehicle CreateVehicle(eVehicleType i_Type)
         {
             const bool v_IsElectric = true;
             Vehicle vehicle = null;

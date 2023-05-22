@@ -6,7 +6,11 @@ namespace Ex03.GarageLogic
     public class Truck : Vehicle
     {
         private const bool k_IsElectric = true;
-        private const int k_NumOfAttributes = 2;
+        private const int k_NumOfWheels = 14;
+        private const float k_MaxAirPressure = 26f;
+        private const float k_MaxFuelTank = 135f;
+        private const eFuelType k_eFuelType = eFuelType.Soler;
+        private const int k_NumOfChangeableAttributes = 2;
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
@@ -14,6 +18,7 @@ namespace Ex03.GarageLogic
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;
+        
         }
 
         public bool IsDangerousMaterials
@@ -56,7 +61,10 @@ namespace Ex03.GarageLogic
 
         public override void SetUniqueAttributes(string[] i_Attributes)
         {
-            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
+            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfChangeableAttributes, i_Attributes.Length);
+            
+            base.setConstData(!k_IsElectric, k_NumOfWheels, k_MaxAirPressure, k_MaxFuelTank, k_eFuelType);
+
             if (bool.TryParse(i_Attributes[0], out bool isDangerous) && float.TryParse(i_Attributes[1], out float volume))
             {
                 IsDangerousMaterials = isDangerous;
