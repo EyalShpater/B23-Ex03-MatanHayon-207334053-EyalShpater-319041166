@@ -208,11 +208,19 @@ namespace Ex03.ConsoleUI
             List<string> licenseNumbers = m_garage.GetLicenseNumbersByStatus(status.ToString());
 
             Console.WriteLine($"Vehicles with status '{status}':");
-            foreach (string licenseNumber in licenseNumbers)
+            if (licenseNumbers.Count == 0)
             {
-                Console.WriteLine(licenseNumber);
+                Console.WriteLine("No vehicles with the specified status found.");
+            }
+            else
+            {
+                foreach (string licenseNumber in licenseNumbers)
+                {
+                    Console.WriteLine(licenseNumber);
+                }
             }
         }
+
 
 
         private static void ChangeVehicleStatus()
