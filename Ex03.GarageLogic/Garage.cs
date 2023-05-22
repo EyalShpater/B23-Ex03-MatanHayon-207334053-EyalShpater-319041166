@@ -14,15 +14,15 @@ namespace Ex03.GarageLogic
             m_Orders = new Dictionary<string, Order>();
         }
 
-        public Vehicle GetVehicleByLicenseNumber(string i_LicenseNumber)
+        public Order GetOrderByLicenseNumber(string i_LicenseNumber)
         {
-            Vehicle vehicle = null;
+            Order order = null;
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
-                vehicle = m_Orders[i_LicenseNumber].Vehicle;
+                order = m_Orders[i_LicenseNumber];
             }
 
-            return vehicle;
+            return order;
         }
 
         public Vehicle CreateNewVehicle(eVehicleType i_Etype)
@@ -95,6 +95,18 @@ namespace Ex03.GarageLogic
             else
             {
                 return null; //throw exception
+            }
+        }
+
+        public void AddNewOrder(Order i_Order)
+        {
+            if (!m_Orders.ContainsKey(i_Order.Vehicle.LicenseNumber))
+            {
+                m_Orders.Add(i_Order.Vehicle.LicenseNumber, i_Order);
+            }
+            else
+            {
+                throw new ArgumentException("An order with the same license number already exists.");
             }
         }
 

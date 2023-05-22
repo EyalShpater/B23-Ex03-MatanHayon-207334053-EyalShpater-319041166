@@ -24,7 +24,7 @@ namespace Ex03.ConsoleUI
                         AddVehicle();
                         break;
                     case "2":
-                        ShowVehicles();
+                        ShowVehiclesByStatusMenu();
                         break;
                     case "3":
                         ChangeVehicleStatus();
@@ -70,12 +70,25 @@ namespace Ex03.ConsoleUI
         }
 
 
-        private static void AddVehicle()
+        private void AddVehicle()
         {
-            Order vehicle = getOrderDataFromUser();
+            Console.WriteLine("Enter license number:");
+            string licenseNumber = Console.ReadLine();
+            Order order = m_garage.GetOrderByLicenseNumber(licenseNumber);
+            if(order!=null) //change null to #define null NOTFOUND but i dont remember how
+            {
+                Console.WriteLine("Vehicle already in Garage.");
+                Console.WriteLine("Changed Status to In-Repair");
+                order.Status = eStatus.InRepair;
+            }
+            else
+            {
+                order = getOrderDataFromUser(licenseNumber);
+
+            }
         }
 
-        private static Order getOrderDataFromUser()
+        private Order getOrderDataFromUser(string i_LicenseNumber)
         {
             Order order = new Order();
 
@@ -91,7 +104,8 @@ namespace Ex03.ConsoleUI
                 order.Vehicle = VehicleFactory.CreateVehicle(selectedType);
                 order.Status = eStatus.InRepair;
                 Console.WriteLine("Object was born");
-                getUniqueDataForVehicle(order);
+                getUniqueDataForVehicle(order,i_LicenseNumber);
+                m_garage.AddNewOrder(order);
             }
             catch (Exception ex)
             {
@@ -101,21 +115,19 @@ namespace Ex03.ConsoleUI
             return order;
         }
 
-        private static void getUniqueDataForVehicle(Order order)
+        private static void getUniqueDataForVehicle(Order order,string i_LicenseNumber)
         {
             Vehicle vehicle = order.Vehicle;
             string[] uniqueAttributes = vehicle.GetUniqueAttributes();
-            string[] dataInputFromUser = new string[uniqueAttributes.Length];
+            string[] dataInputFromUser = new string[uniqueAttributes.Length+1];
+            dataInputFromUser[0] = i_LicenseNumber;
             Console.WriteLine("Enter Data for the next Attributes:");
-
             try
             {
-                Console.WriteLine("License Number:");
-                dataInputFromUser[0] = Console.ReadLine();
-                for (int index = 1; index < uniqueAttributes.Length; index++)
+                for (int index = 0; index < uniqueAttributes.Length; index++)
                 {
                     Console.WriteLine(uniqueAttributes[index] + ":");
-                    dataInputFromUser[index] = Console.ReadLine();
+                    dataInputFromUser[index+1] = Console.ReadLine(); //first place in array is License number
                 }
 
                 vehicle.SetUniqueAttributes(dataInputFromUser);
@@ -162,12 +174,46 @@ namespace Ex03.ConsoleUI
         }
 
 
-
-
-        private static void ShowVehicles()
+        private void ShowVehiclesByStatusMenu()
         {
-            Console.WriteLine("Show Vehicles");
+            int userInput=0;
+            bool isValidInput = false;
+
+            while (!isValidInput)
+            {
+                Console.WriteLine("Choose a status:");
+                for (int i = 0; i < Enum.GetNames(typeof(eStatus)).Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {Enum.GetName(typeof(eStatus), i)}");
+                }
+
+                Console.WriteLine("Enter the corresponding number: ");
+                if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > Enum.GetNames(typeof(eStatus)).Length)
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+                else
+                {
+                    isValidInput = true;
+                }
+            }
+
+            eStatus status = (eStatus)(userInput - 1);
+            DisplayVehiclesByStatus(status);
         }
+
+
+        private void DisplayVehiclesByStatus(eStatus status)
+        {
+            List<string> licenseNumbers = m_garage.GetLicenseNumbersByStatus(status.ToString());
+
+            Console.WriteLine($"Vehicles with status '{status}':");
+            foreach (string licenseNumber in licenseNumbers)
+            {
+                Console.WriteLine(licenseNumber);
+            }
+        }
+
 
         private static void ChangeVehicleStatus()
         {

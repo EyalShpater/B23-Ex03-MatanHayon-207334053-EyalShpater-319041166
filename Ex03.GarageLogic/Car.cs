@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
     {
         private const int k_MinNumOfDoors = 2;
         private const int k_MaxNumOfDoors = 5;
-        private const int k_NumOfAttributes = 2;
+        private const int k_NumOfAttributes = 3;
         private eColor m_Color;
         private int m_NumOfDoors;
 
@@ -47,6 +47,7 @@ namespace Ex03.GarageLogic
         public Car(bool i_IsElectric) : base(i_IsElectric)
         {
             m_Color = 0;
+
             m_NumOfDoors = 0;
         }
 
