@@ -18,8 +18,7 @@ namespace Ex03.GarageLogic
         private eColor m_Color;
         private int m_NumOfDoors;
 
-        public Car(Engine i_Engine, string i_Model, string i_LicenseNumber) 
-            : base(i_Engine, i_Model, i_LicenseNumber)
+        public Car(Engine i_Engine) : base(i_Engine)
         {
             m_Color = eColor.White;
             m_NumOfDoors = 0;

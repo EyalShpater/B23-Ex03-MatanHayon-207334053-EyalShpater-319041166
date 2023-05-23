@@ -14,21 +14,12 @@ namespace Ex03.GarageLogic
         protected List<Wheel> m_Wheels;
         protected Engine m_Engine;
 
-        //public Vehicle(Engine i_Engine, List<Wheel> i_Wheels)
-        //{
-        //    m_Engine = i_Engine;
-        //    m_Wheels = i_Wheels;
-        //    m_Model = null;
-        //    m_LicenseNumber = null;
-        //    m_EnergyLevel = 0;
-        //}
-
-        public Vehicle(string i_Model, string i_LicenseNumber)
+        public Vehicle(Engine i_Engine)
         {
-            m_Model = i_Model;
-            m_LicenseNumber = i_LicenseNumber;
+            m_Engine = i_Engine;
+            m_Model = null;
+            m_LicenseNumber = null;
             m_EnergyLevel = 0;
-            m_Engine = null;
             m_Wheels = null;
         }
 
@@ -171,10 +162,39 @@ Energy Level: {2}%
         {
             this.LicenseNumber = i_LicenseNumber;
 
-            try
-            {
+            //try
+            //{
                 
+            //}
+        }
+
+        protected List<Wheel> CreateWheelsList(int i_NumOfWheels, float i_MaxAirPressure)
+        {
+            List<Wheel> wheels = new List<Wheel>(i_NumOfWheels);
+
+            for (int i = 0; i < i_NumOfWheels; i++)
+            {
+                wheels[i] = new Wheel(i_MaxAirPressure);
             }
+
+            return wheels;
+        }
+
+        public override int GetHashCode()
+        {
+            return m_LicenseNumber.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool isEqual = false;
+
+            if (obj is Vehicle vehicle)
+            {
+                isEqual = vehicle.GetHashCode() == this.GetHashCode();
+            }
+
+            return isEqual;
         }
     }
 }

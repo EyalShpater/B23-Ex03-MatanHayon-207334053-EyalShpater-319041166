@@ -1,38 +1,39 @@
-﻿using static Ex03.GarageLogic.eVehicleType;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
-    public class VehicleFactory
+    public static class VehicleFactory
     {
-        public static Vehicle CreateVehicle(eVehicleType i_Type, string i_LicenseNumber, string i_Model)
+        public static string[] GetVehiclesTypes()
+        {
+            string[] types = { "Electric Car", "Fuel Car", "Electric MotorCycle", "Fuel MotorCycle", "Truck" };
+
+            return types;
+        }
+        public static Vehicle CreateVehicle(int i_Type)
         {
             Vehicle vehicle = null;
             Engine engine = null;
 
             switch (i_Type)
             {
-                case ElectricCar:
+                case 0:
                     engine = new ElectricEngine(Car.k_MaxBatterySize);
-                    vehicle = new Car(engine, i_Model, i_LicenseNumber);
+                    vehicle = new Car(engine);
                     break;
-                case FuelCar:
+                case 1:
                     engine = new FuelEngine(Car.k_MaxFuelTank, Car.k_FuelType);
-                    vehicle = new Car(engine, i_Model, i_LicenseNumber);
+                    vehicle = new Car(engine);
                     break;
-                case ElectricMotorCycle:
+                case 2:
                     engine = new ElectricEngine(MotorCycle.k_MaxBatterySize);
-                    vehicle = new MotorCycle(engine, i_Model, i_LicenseNumber);
+                    vehicle = new MotorCycle(engine);
                     break;
-                case FuelMotorCycle:
+                case 3:
                     engine = new FuelEngine(MotorCycle.k_MaxFuelTank, MotorCycle.k_FuelType);
-                    vehicle = new MotorCycle(engine, i_Model, i_LicenseNumber);
+                    vehicle = new MotorCycle(engine);
                     break;
-                case eVehicleType.Truck:
+                case 4:
                     engine = new FuelEngine(Truck.k_MaxFuelTank, Truck.k_eFuelType);
-                    vehicle = new Truck(engine, i_Model, i_LicenseNumber);
+                    vehicle = new Truck(engine);
                     break;
                 default:
                     /// throw exception

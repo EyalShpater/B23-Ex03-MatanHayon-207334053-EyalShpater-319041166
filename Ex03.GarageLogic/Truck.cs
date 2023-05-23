@@ -14,8 +14,7 @@ namespace Ex03.GarageLogic
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
-        public Truck(Engine i_Engine, string i_Model, string i_LicenseNumber)
-            : base(i_Engine, i_Model, i_LicenseNumber)
+        public Truck(Engine i_Engine) : base(i_Engine)
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;

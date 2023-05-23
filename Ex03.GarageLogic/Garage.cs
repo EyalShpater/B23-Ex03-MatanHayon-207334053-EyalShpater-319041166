@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
 
         public Vehicle CreateNewVehicle(eVehicleType i_Etype)
         {
-            Vehicle newVehicle = VehicleFactory.CreateVehicle(i_Etype);
+            Vehicle newVehicle = null; //VehicleFactory.CreateVehicle(i_Etype);
 
             return newVehicle;
         }

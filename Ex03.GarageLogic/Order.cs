@@ -10,12 +10,12 @@ namespace Ex03.GarageLogic
         private string m_PhoneNumber;
         private eStatus m_Status;
 
-        public Order()
+        public Order(Vehicle i_Vehicle, string i_CustomerName, string i_PhoneNumber)
         {
-            m_Vehicle = null;
-            m_CustomerName = null;
-            m_PhoneNumber = null;
-            m_Status = 0;
+            Vehicle = i_Vehicle;
+            CustomerName = i_CustomerName;
+            PhoneNumber = i_PhoneNumber;
+            m_Status = eStatus.InRepair;
         }
 
         public Vehicle Vehicle
@@ -105,6 +105,23 @@ Customer Name: {1}
 Phone Nuner: {2}
 Status: {3}
 ", m_Vehicle.ToString(), m_CustomerName, m_PhoneNumber, m_Status.ToString());
+        }
+
+        public override int GetHashCode()
+        {
+            return m_Vehicle.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool isEqual = false;
+
+            if (obj is Order order)
+            {
+                isEqual = order.GetHashCode() == this.GetHashCode();
+            }
+
+            return isEqual;
         }
     }
 }

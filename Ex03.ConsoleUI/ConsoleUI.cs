@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ex03.GarageLogic;
+
 namespace Ex03.ConsoleUI
 {
     public class ConsoleUI
     {
+        private const int k_InvalidCohice = -1;
+        private const object k_NotFound = null;
         private Garage m_Garage;
 
         public ConsoleUI()
@@ -14,39 +17,40 @@ namespace Ex03.ConsoleUI
             m_Garage = new Garage();
         }
 
-        public void Run() // add enum
+        public void Run()
         {
-            string input = null;
+            bool endProgram = false;
 
-            while (input != "0") // input != QuitProgram (enum)
+            while (!endProgram)
             {
                 printMenu();
-                input = Console.ReadLine();
+                int input = int.Parse(Console.ReadLine());
                 switch (input)
                 {
-                    case "1":
+                    case (int)eMenuOptions.AddVehicle:
                         AddVehicle();
                         break;
-                    case "2":
-                        ShowVehiclesByStatusMenu();
+                    case (int)eMenuOptions.DisplayGarageVehicles:
+                        showVehiclesByStatusMenu();
                         break;
-                    case "3":
+                    case (int)eMenuOptions.ChangeVehicleStatus:
                         ChangeVehicleStatus();
                         break;
-                    case "4":
+                    case (int)eMenuOptions.AddAirToWheels:
                         AddAirToWheels();
                         break;
-                    case "5":
+                    case (int)eMenuOptions.AddFuel:
                         AddFuel();
                         break;
-                    case "6":
+                    case (int)eMenuOptions.ChargeBattery:
                         ChargeBattery();
                         break;
-                    case "7":
+                    case (int)eMenuOptions.DisplayOrder:
                         DisplayOrder();
                         break;
-                    case "0":
+                    case (int)eMenuOptions.Exit:
                         Console.WriteLine("Exiting the program...");
+                        endProgram = true;
                         break;
                     default:
                         Console.WriteLine("Invalid choice. Please enter a valid option.");
@@ -58,61 +62,71 @@ namespace Ex03.ConsoleUI
 
         private static void printMenu()
         {
-            Console.WriteLine("Welcome To Our Majestic Garage!");
-            Console.WriteLine("Enter a number to choose an option:");
-            Console.WriteLine("1. Add vehicle");
-            Console.WriteLine("2. Show vehicles in garage");
-            Console.WriteLine("3. Change vehicle status");
-            Console.WriteLine("4. Add air to wheels");
-            Console.WriteLine("5. Add fuel");
-            Console.WriteLine("6. Charge battery");
-            Console.WriteLine("7. Display order");
-            Console.WriteLine("0. Exit");
+            Console.WriteLine($@"Welcome To Our Majestic Garage!
+Enter a number to choose an option:
+{(int)eMenuOptions.AddVehicle}. Add vehicle
+{(int)eMenuOptions.DisplayGarageVehicles}. Show vehicles in garage
+{(int)eMenuOptions.ChangeVehicleStatus}. Change vehicle status
+{(int)eMenuOptions.AddAirToWheels}. Add air to wheels
+{(int)eMenuOptions.AddFuel}. Add fuel
+{(int)eMenuOptions.ChargeBattery}. Charge battery
+{(int)eMenuOptions.DisplayOrder}. Display order
+{(int)eMenuOptions.Exit}. Exit");
         }
 
 
         private void AddVehicle()
         {
+            string licenseNumber;
+            Order order;
+
             Console.WriteLine("Enter license number:");
-            string licenseNumber = Console.ReadLine();
-            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
-            if(order!=null) //change null to #define null NOTFOUND but i dont remember how
+            licenseNumber = Console.ReadLine();
+            order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+            if (order == k_NotFound)
             {
-                Console.WriteLine("Vehicle already in Garage.");
-                Console.WriteLine("Changed Status to In-Repair");
-                order.Status = eStatus.InRepair;
+                order = getOrderDataFromUser(licenseNumber);
             }
             else
             {
-                order = getOrderDataFromUser(licenseNumber);
+                Console.WriteLine(@"Vehicle already in Garage.
+Changed Status to In-Repair");
+                order.Status = eStatus.InRepair;
             }
         }
 
         private Order getOrderDataFromUser(string i_LicenseNumber)
         {
-            Order order = new Order();
-
             try
             {
-                Console.WriteLine("Enter customer name:");
-                order.CustomerName = Console.ReadLine();
-
-                Console.WriteLine("Enter phone number (10 digits):");
-                order.PhoneNumber = Console.ReadLine();
-
-                eVehicleType selectedType = GetVehicleTypeChoice();
-                order.Vehicle = VehicleFactory.CreateVehicle(selectedType);
-                order.Status = eStatus.InRepair;
-                Console.WriteLine("Object was born");
+                getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle);
+                Order order = new Order(vehicle, customername, phoneNumber);
+                Console.WriteLine("Object was born"); //
                 getUniqueDataForVehicleFromUser(order,i_LicenseNumber);
                 m_Garage.AddNewOrder(order);
+
+                return order;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error occurred while getting order data: " + ex.Message);
             }
+        }
 
-            return order;
+        private void getCustomerDetails(out string o_Name, out string o_PhoneNumber, out Vehicle o_Vehicle)
+        {
+            Console.WriteLine("Enter customer name:");
+            o_Name = Console.ReadLine();
+            Console.WriteLine("Enter phone number (10 digits):");
+            o_PhoneNumber = Console.ReadLine();
+            o_Vehicle = getVehicleFromUser();
+        }
+
+        private Vehicle getVehicleFromUser()
+        {
+            int selectedVehicleType = GetVehicleTypeChoiceFromUser();
+
+            return VehicleFactory.CreateVehicle(selectedVehicleType);
         }
 
         private static void getUniqueDataForVehicleFromUser(Order order,string i_LicenseNumber)
@@ -139,7 +153,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private static void getGeneralDataForVehicleFromUser(Vehicle vehicle,string i_LicenseNumber)
+        private static void getGeneralDataForVehicleFromUser(Vehicle vehicle, string i_LicenseNumber)
         {
             Console.WriteLine("Enter current energy ammount:");
             string currentEnergyAmmount = Console.ReadLine();
@@ -153,28 +167,19 @@ namespace Ex03.ConsoleUI
             vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount, wheelsManufatorer, wheelsAirPressure, carModel);
         }
 
-        private static eVehicleType GetVehicleTypeChoice()
+        private int GetVehicleTypeChoiceFromUser()
         {
-            eVehicleType[] vehicleTypes = (eVehicleType[])Enum.GetValues(typeof(eVehicleType));
             bool isValidChoice = false;
-            eVehicleType selectedType = 0;
+            int selectedIndex = k_InvalidCohice;
+            int numOfTypes = VehicleFactory.GetVehiclesTypes().Length;
+            string typeChoice;
 
             while (!isValidChoice)
             {
-                Console.WriteLine("Enter vehicle type:");
-
-                int index = 1;
-                foreach (eVehicleType type in vehicleTypes)
+                printVehiclesTypes();   
+                typeChoice = Console.ReadLine();
+                if (int.TryParse(typeChoice, out selectedIndex) && isValidValueInRange(selectedIndex, numOfTypes, 1))
                 {
-                    Console.WriteLine($"{index}. {type}");
-                    index++;
-                }
-
-                string typeChoice = Console.ReadLine();
-
-                if (int.TryParse(typeChoice, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= vehicleTypes.Length)
-                {
-                    selectedType = vehicleTypes[selectedIndex - 1];
                     isValidChoice = true;
                 }
                 else
@@ -183,11 +188,26 @@ namespace Ex03.ConsoleUI
                 }
             }
 
-            return selectedType;
+            return selectedIndex;
         }
 
+        private void printVehiclesTypes()
+        {
+            string[] vehiclesTypes = VehicleFactory.GetVehiclesTypes();
 
-        private void ShowVehiclesByStatusMenu()
+            Console.WriteLine("Enter vehicle type:");
+            for (int i = 0; i < vehiclesTypes.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {vehiclesTypes[i]}");
+            }
+        }
+
+        private bool isValidValueInRange(int i_Value, int i_Max, int i_Min)
+        {
+            return i_Value <= i_Max && i_Value >= i_Min;
+        }
+
+        private void showVehiclesByStatusMenu()
         {
             int userInput=0;
             bool isValidInput = false;
