@@ -18,17 +18,7 @@
                 return m_CurrentEnergyLevel; 
             } 
 
-            set 
-            {
-                if(value >= 0)
-                {
-                    m_CurrentEnergyLevel = value;   
-                }
-                else
-                {
-                    throw new ValueOutOfRangeException(m_MaxCapacity, 0);
-                }
-            }
+
         }
 
         public float MaxCapacity
@@ -55,7 +45,7 @@
         {
             if (this.CurrentEnergyLevel + i_EnergyToAdd <= m_MaxCapacity)
             {
-                this.CurrentEnergyLevel += i_EnergyToAdd;
+                m_CurrentEnergyLevel += i_EnergyToAdd;
             }
             else
             {

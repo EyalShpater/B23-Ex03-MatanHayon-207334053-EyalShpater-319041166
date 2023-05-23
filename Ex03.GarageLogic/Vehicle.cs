@@ -156,5 +156,16 @@ Energy Level: {2}%
                 throw new ArgumentException("Invalid number of attributes.");
             }
         }
+
+        public void SetGeneralAttributes(string i_LicenseNumber, string i_CurrentEnergyAmmount, 
+            string i_WheelsManufatorer, string i_WheelsAirPressure, string i_CarModel)
+        {
+            this.LicenseNumber = i_LicenseNumber;
+
+            try
+            {
+                
+            }
+        }
     }
 }

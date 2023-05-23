@@ -130,7 +130,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(uniqueAttributes[index] + ":");
                     dataInputFromUser[index+1] = Console.ReadLine(); //first place in array is License number
                 }
-
+                getGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
                 vehicle.SetUniqueAttributes(dataInputFromUser);
             }
             catch (Exception ex)
@@ -139,7 +139,19 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        private static void getGeneralDataForVehicleFromUser(Vehicle vehicle,string i_LicenseNumber)
+        {
+            Console.WriteLine("Enter current energy ammount:");
+            string currentEnergyAmmount = Console.ReadLine();
+            Console.WriteLine("Enter wheels manufactorer:");
+            string wheelsManufatorer = Console.ReadLine();
+            Console.WriteLine("Enter wheels AirPressure");
+            string wheelsAirPressure = Console.ReadLine();
+            Console.WriteLine("Enter Car model:");
+            string carModel = Console.ReadLine();
 
+            vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount, wheelsManufatorer, wheelsAirPressure, carModel);
+        }
 
         private static eVehicleType GetVehicleTypeChoice()
         {
