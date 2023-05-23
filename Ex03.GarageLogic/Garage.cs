@@ -98,16 +98,15 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void AddNewOrder(Order i_Order)
+        public bool AddNewOrder(Order i_Order)
         {
+            bool isSuccessful = false;
             if (!m_Orders.ContainsKey(i_Order.Vehicle.LicenseNumber))
             {
                 m_Orders.Add(i_Order.Vehicle.LicenseNumber, i_Order);
+                isSuccessful = true;
             }
-            else
-            {
-                throw new ArgumentException("An order with the same license number already exists.");
-            }
+            return isSuccessful;
         }
 
     }

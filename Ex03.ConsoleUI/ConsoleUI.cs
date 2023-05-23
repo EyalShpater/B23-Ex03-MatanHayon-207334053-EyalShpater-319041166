@@ -7,17 +7,21 @@ namespace Ex03.ConsoleUI
 {
     public class ConsoleUI
     {
-        private Garage m_garage;
+        private Garage m_Garage;
+
         public ConsoleUI()
         {
-            m_garage = new Garage();
+            m_Garage = new Garage();
         }
-        public void Run()
+
+        public void Run() // add enum
         {
-            printMenu();
-            string input = Console.ReadLine();
-            while (input!="0")
+            string input = null;
+
+            while (input != "0") // input != QuitProgram (enum)
             {
+                printMenu();
+                input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
@@ -43,14 +47,11 @@ namespace Ex03.ConsoleUI
                         break;
                     case "0":
                         Console.WriteLine("Exiting the program...");
-                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Invalid choice. Please enter a valid option.");
                         break;
                 }
-                printMenu();
-                input = Console.ReadLine();
             }
         }
 
@@ -74,7 +75,7 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine("Enter license number:");
             string licenseNumber = Console.ReadLine();
-            Order order = m_garage.GetOrderByLicenseNumber(licenseNumber);
+            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
             if(order!=null) //change null to #define null NOTFOUND but i dont remember how
             {
                 Console.WriteLine("Vehicle already in Garage.");
@@ -84,7 +85,6 @@ namespace Ex03.ConsoleUI
             else
             {
                 order = getOrderDataFromUser(licenseNumber);
-
             }
         }
 
@@ -104,8 +104,8 @@ namespace Ex03.ConsoleUI
                 order.Vehicle = VehicleFactory.CreateVehicle(selectedType);
                 order.Status = eStatus.InRepair;
                 Console.WriteLine("Object was born");
-                getUniqueDataForVehicle(order,i_LicenseNumber);
-                m_garage.AddNewOrder(order);
+                getUniqueDataForVehicleFromUser(order,i_LicenseNumber);
+                m_Garage.AddNewOrder(order);
             }
             catch (Exception ex)
             {
@@ -115,11 +115,12 @@ namespace Ex03.ConsoleUI
             return order;
         }
 
-        private static void getUniqueDataForVehicle(Order order,string i_LicenseNumber)
+        private static void getUniqueDataForVehicleFromUser(Order order,string i_LicenseNumber)
         {
             Vehicle vehicle = order.Vehicle;
             string[] uniqueAttributes = vehicle.GetUniqueAttributes();
-            string[] dataInputFromUser = new string[uniqueAttributes.Length+1];
+            string[] dataInputFromUser = new string[uniqueAttributes.Length + 1];
+
             dataInputFromUser[0] = i_LicenseNumber;
             Console.WriteLine("Enter Data for the next Attributes:");
             try
@@ -205,7 +206,7 @@ namespace Ex03.ConsoleUI
 
         private void DisplayVehiclesByStatus(eStatus status)
         {
-            List<string> licenseNumbers = m_garage.GetLicenseNumbersByStatus(status.ToString());
+            List<string> licenseNumbers = m_Garage.GetLicenseNumbersByStatus(status.ToString());
 
             Console.WriteLine($"Vehicles with status '{status}':");
             if (licenseNumbers.Count == 0)

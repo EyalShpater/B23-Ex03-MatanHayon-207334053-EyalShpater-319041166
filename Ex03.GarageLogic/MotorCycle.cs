@@ -11,7 +11,8 @@ namespace Ex03.GarageLogic
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
-        public MotorCycle(bool i_IsElectric) : base(i_IsElectric)
+        public MotorCycle(Engine i_Engine, List<Wheel> i_Wheels) 
+            : base(i_Engine, i_Wheels)
         {
             m_LicenseType = 0;
             m_EngineVolume = 0;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Ex03.GarageLogic
@@ -10,6 +11,14 @@ namespace Ex03.GarageLogic
         private const int k_NumOfAttributes = 3;
         private eColor m_Color;
         private int m_NumOfDoors;
+
+        public Car(Engine i_Engine, List<Wheel> i_Wheels) : base(i_Engine, i_Wheels)
+        {
+            m_Color = eColor.White;
+            m_NumOfDoors = 0;
+        }
+
+
 
         public eColor Color
         {
@@ -44,13 +53,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Car(bool i_IsElectric) : base(i_IsElectric)
-        {
-            m_Color = 0;
-
-            m_NumOfDoors = 0;
-        }
-
+       
         public override string[] GetUniqueAttributes()
         {
             return new string[] { "Colour", "Number Of Doors" };

@@ -5,6 +5,12 @@
         protected float m_CurrentEnergyLevel;
         protected float m_MaxCapacity;
 
+        protected Engine(float i_MaxCapacity)
+        {
+            m_MaxCapacity = i_MaxCapacity;
+            m_CurrentEnergyLevel = 0;
+        }
+
         public float CurrentEnergyLevel
         { 
             get 

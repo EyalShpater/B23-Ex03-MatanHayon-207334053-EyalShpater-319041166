@@ -11,41 +11,16 @@ namespace Ex03.GarageLogic
         protected string m_Model;
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
-        List<Wheel> m_Wheels;
+        protected List<Wheel> m_Wheels;
         protected Engine m_Engine;
 
-        public Vehicle(bool i_IsElectricEngine)
+        public Vehicle(Engine i_Engine, List<Wheel> i_Wheels)
         {
-            if (i_IsElectricEngine)
-            {
-                m_Engine = new ElectricEngine();
-            }
-            else
-            {
-                m_Engine = new FuelEngine();
-            }
-
+            m_Engine = i_Engine;
+            m_Wheels = i_Wheels;
             m_Model = null;
             m_LicenseNumber = null;
             m_EnergyLevel = 0;
-            m_Wheels = null;
-        }
-        
-        public void setConstData(bool i_IsElectric, int i_NumOfWheels, float i_MaxAirPressure, float i_MaxEngineCapacity, eFuelType i_eFuelType)
-        {   //without i_iselectirc?
-            m_Engine.MaxCapacity = i_MaxEngineCapacity;
-            if (!i_IsElectric && m_Engine is FuelEngine fuelEngine)
-            {
-                fuelEngine.FuelType = i_eFuelType;
-            }
-
-            m_Wheels = new List<Wheel>(i_NumOfWheels);
-            foreach (Wheel wheel in m_Wheels)
-            {
-                wheel.MaxAirPressure = i_MaxAirPressure;
-            }
-
-
         }
 
 

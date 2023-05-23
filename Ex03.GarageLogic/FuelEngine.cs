@@ -4,11 +4,19 @@ namespace Ex03.GarageLogic
 {
     internal class FuelEngine : Engine
     {
-        private eFuelType r_FuelType;
+        private readonly eFuelType r_FuelType;
+
+        internal FuelEngine(float i_MaxEngineTank, eFuelType i_FuelType) :base(i_MaxEngineTank)
+        {
+            r_FuelType = i_FuelType;
+        }
+
         public eFuelType FuelType
         {
-            get { return r_FuelType; }
-            set { r_FuelType = value; }
+            get 
+            { 
+                return r_FuelType; 
+            }
         }
 
         internal void AddFuel(float i_AmountToAdd, eFuelType i_FuelTypeToAdd)
@@ -19,7 +27,8 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ArgumentException(string.Format("Wrong Fuel Type! Fuel Type must be {0}!", r_FuelType.ToString()));
+                throw new ArgumentException(string.Format("Wrong Fuel Type! Fuel Type must be {0}!"
+                    , r_FuelType.ToString()));
             }
         }
 
@@ -30,6 +39,5 @@ namespace Ex03.GarageLogic
 Fuel Type: {0}
 {1}", r_FuelType.ToString(), base.ToString());
         }
-
     }
 }

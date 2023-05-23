@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -10,15 +11,15 @@ namespace Ex03.GarageLogic
         private const float k_MaxAirPressure = 26f;
         private const float k_MaxFuelTank = 135f;
         private const eFuelType k_eFuelType = eFuelType.Soler;
-        private const int k_NumOfChangeableAttributes = 2;
+        private const int k_NumOfChangeableAttributes = 3;
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
-        public Truck() : base(!k_IsElectric)
+        public Truck(Engine i_Engine, List<Wheel> i_Wheels) 
+            : base(i_Engine, i_Wheels)
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;
-        
         }
 
         public bool IsDangerousMaterials
@@ -56,18 +57,17 @@ namespace Ex03.GarageLogic
 
         public override string[] GetUniqueAttributes()
         {
-            return new string[] { "Is Containing Dangerous Materials", "Cargo Volume" };
+            return new string[] { @"Is Containing Dangerous Materials:", "Cargo Volume" };
         }
 
         public override void SetUniqueAttributes(string[] i_Attributes)
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfChangeableAttributes, i_Attributes.Length);
-            
-            base.setConstData(!k_IsElectric, k_NumOfWheels, k_MaxAirPressure, k_MaxFuelTank, k_eFuelType);
+            bool isDangerousValidAnswer = i_Attributes[0].ToLower() == "yes";
 
-            if (bool.TryParse(i_Attributes[0], out bool isDangerous) && float.TryParse(i_Attributes[1], out float volume))
+            if (isDangerousValidAnswer && float.TryParse(i_Attributes[1], out float volume))
             {
-                IsDangerousMaterials = isDangerous;
+                IsDangerousMaterials = isDangerousValidAnswer;
                 CargoVolume = volume;
             }
             else
