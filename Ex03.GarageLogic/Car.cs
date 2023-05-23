@@ -6,19 +6,25 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
+        //Regular Car consts:
+        private const int k_NumOfWheels = 5;
+        private const float k_MaxWheelAirPressure = 33;
+        internal const eFuelType k_FuelType = eFuelType.Octan95;
+        internal const float k_MaxFuelTank = 46f;
+        internal const float k_MaxBatterySize = 5.2f;
         private const int k_MinNumOfDoors = 2;
         private const int k_MaxNumOfDoors = 5;
         private const int k_NumOfAttributes = 3;
         private eColor m_Color;
         private int m_NumOfDoors;
 
-        public Car(Engine i_Engine, List<Wheel> i_Wheels) : base(i_Engine, i_Wheels)
+        public Car(Engine i_Engine, string i_Model, string i_LicenseNumber) 
+            : base(i_Engine, i_Model, i_LicenseNumber)
         {
             m_Color = eColor.White;
             m_NumOfDoors = 0;
+            base.m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
         }
-
-
 
         public eColor Color
         {

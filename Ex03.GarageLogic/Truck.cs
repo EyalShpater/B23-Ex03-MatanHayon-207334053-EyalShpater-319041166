@@ -6,20 +6,20 @@ namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
-        private const bool k_IsElectric = true;
         private const int k_NumOfWheels = 14;
-        private const float k_MaxAirPressure = 26f;
-        private const float k_MaxFuelTank = 135f;
-        private const eFuelType k_eFuelType = eFuelType.Soler;
+        private const float k_MaxWheelAirPressure = 26f;
+        internal const float k_MaxFuelTank = 135f;
+        internal const eFuelType k_eFuelType = eFuelType.Soler;
         private const int k_NumOfChangeableAttributes = 3;
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
-        public Truck(Engine i_Engine, List<Wheel> i_Wheels) 
-            : base(i_Engine, i_Wheels)
+        public Truck(Engine i_Engine, string i_Model, string i_LicenseNumber)
+            : base(i_Engine, i_Model, i_LicenseNumber)
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;
+            base.m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
         }
 
         public bool IsDangerousMaterials
@@ -57,7 +57,7 @@ namespace Ex03.GarageLogic
 
         public override string[] GetUniqueAttributes()
         {
-            return new string[] { @"Is Containing Dangerous Materials:", "Cargo Volume" };
+            return new string[] { "Is Containing Dangerous Materials", "Cargo Volume" };
         }
 
         public override void SetUniqueAttributes(string[] i_Attributes)

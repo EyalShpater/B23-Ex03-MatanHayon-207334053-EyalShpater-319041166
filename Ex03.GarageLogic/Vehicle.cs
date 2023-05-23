@@ -6,21 +6,30 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        const int k_MaxLicenseLength = 8;
-        const int k_MaxModelLength = 30;
+        private const int k_MaxLicenseLength = 8;
+        private const int k_MaxModelLength = 30;
         protected string m_Model;
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
         protected List<Wheel> m_Wheels;
         protected Engine m_Engine;
 
-        public Vehicle(Engine i_Engine, List<Wheel> i_Wheels)
+        //public Vehicle(Engine i_Engine, List<Wheel> i_Wheels)
+        //{
+        //    m_Engine = i_Engine;
+        //    m_Wheels = i_Wheels;
+        //    m_Model = null;
+        //    m_LicenseNumber = null;
+        //    m_EnergyLevel = 0;
+        //}
+
+        public Vehicle(string i_Model, string i_LicenseNumber)
         {
-            m_Engine = i_Engine;
-            m_Wheels = i_Wheels;
-            m_Model = null;
-            m_LicenseNumber = null;
+            m_Model = i_Model;
+            m_LicenseNumber = i_LicenseNumber;
             m_EnergyLevel = 0;
+            m_Engine = null;
+            m_Wheels = null;
         }
 
 

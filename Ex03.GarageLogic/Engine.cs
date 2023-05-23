@@ -17,8 +17,6 @@
             { 
                 return m_CurrentEnergyLevel; 
             } 
-
-
         }
 
         public float MaxCapacity
@@ -27,7 +25,6 @@
             {
                 return m_MaxCapacity;
             }
-
             set
             {
                 if (value > 0)
@@ -60,7 +57,5 @@
 Max Capacity: {1}",
                 m_CurrentEnergyLevel, m_MaxCapacity);
         }
-
     }
-
 }

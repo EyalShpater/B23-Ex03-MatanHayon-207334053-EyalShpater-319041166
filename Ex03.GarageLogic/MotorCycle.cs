@@ -7,15 +7,22 @@ namespace Ex03.GarageLogic
 {
     public class MotorCycle : Vehicle
     {
+        //Regular Motorcycle consts:
+        private const int k_NumOfWheels = 2;
+        private const float k_MaxWheelAirPressure = 31;
+        internal const eFuelType k_FuelType = eFuelType.Octan98;
+        internal const float k_MaxFuelTank = 6.4f;
+        internal const float k_MaxBatterySize = 2.6f;
         private const int k_NumOfAttributes = 2;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
-        public MotorCycle(Engine i_Engine, List<Wheel> i_Wheels) 
-            : base(i_Engine, i_Wheels)
+        public MotorCycle(Engine i_Engine, string i_Model, string i_LicenseNumber)
+            : base(i_Engine, i_Model, i_LicenseNumber)
         {
             m_LicenseType = 0;
             m_EngineVolume = 0;
+            base.m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
         }
 
         public eLicenseType LicenseType
