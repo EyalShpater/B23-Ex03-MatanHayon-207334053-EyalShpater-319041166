@@ -66,45 +66,44 @@ namespace Ex03.GarageLogic
             return isSucceed;
         }
 
-        public bool InflateAllWheelsToMax(string i_LicenseNumber)
+        public void InflateAllWheelsToMax(string i_LicenseNumber)
         {
-            bool isSucceed = false;
-
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 m_Orders[i_LicenseNumber].Vehicle.InflateAllWheels();
-                isSucceed = true;
             }
-
-            return isSucceed;
+            else
+            {
+                throw new ArgumentException("Vehicle is not found!");
+            }
         }
 
-        public bool AddFuel(string i_LicenseNumber, eFuelType i_FuelType, float i_Ammount)
+        public void AddFuel(string i_LicenseNumber, eFuelType i_FuelType, float i_Ammount)
         {
-            bool isSucceed = false;
             Order order = GetOrderByLicenseNumber(i_LicenseNumber);
 
             if(order!=null)
             {
                 order.Vehicle.AddEnergy(i_Ammount, i_FuelType);
-                isSucceed = true;
             }
-
-            return isSucceed;
+            else
+            {
+                throw new ArgumentException("Vehicle is not found!");
+            }
         }
 
-        public bool ChargeVehicle(string i_LicenseNumber, float i_Ammount)
+        public void ChargeVehicle(string i_LicenseNumber, float i_Ammount)
         {
-            bool isSucceed = false;
             Order order = GetOrderByLicenseNumber(i_LicenseNumber);
 
             if (order != null)
             {
                 order.Vehicle.AddEnergy(i_Ammount);
-                isSucceed = true;
             }
-
-            return isSucceed;
+            else
+            {
+                throw new ArgumentException("Vehicle is not found!");
+            }
         }
 
         public bool AddNewOrder(Order i_Order)

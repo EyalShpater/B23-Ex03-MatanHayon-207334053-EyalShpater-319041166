@@ -20,6 +20,17 @@ namespace Ex03.GarageLogic
             { 
                 return m_CurrentAirPressure; 
             }
+            private set
+            {
+                if (value <= m_MaxAirPressure && value >= 0)
+                {
+                    m_CurrentAirPressure = value;
+                }
+                else
+                {
+                    ValueOutOfRangeException ex = new ValueOutOfRangeException(m_MaxAirPressure, 0);
+                }
+            }
         }
 
         internal float MaxAirPressure

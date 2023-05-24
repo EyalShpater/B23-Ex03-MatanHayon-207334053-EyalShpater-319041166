@@ -10,7 +10,9 @@ namespace Ex03.ConsoleUI
     {
         private const int k_InvalidCohice = -1;
         private const object k_NotFound = null;
+        private const string k_EmptyGarageMessege = "There are no vehicles in the garage!";
         private Garage m_Garage;
+        private const string k_TitlesChar = "-";
 
         /******* User Functions ********/
 
@@ -26,7 +28,7 @@ namespace Ex03.ConsoleUI
             while (!endProgram)
             {
                 printMenu();
-                int input = int.Parse(Console.ReadLine());
+                int input = getIntFromUser();
                 switch (input)
                 {
                     case (int)eMenuOptions.AddVehicle:
@@ -65,19 +67,28 @@ namespace Ex03.ConsoleUI
 
         private void addVehicle()
         {
-            string licenseNumber = getLicenseNumberFromUser();
-            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+            printMessageAsTitle("Add Vehicle");
+            try
+            {
+                string licenseNumber = getLicenseNumberFromUser();
+                Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
 
-            if (order == k_NotFound)
-            {
-                order = getOrderDataFromUser(licenseNumber);
-            }
-            else
-            {
-                Console.WriteLine(@"Vehicle already in Garage.
+                if (order == k_NotFound)
+                {
+                    order = getOrderDataFromUser(licenseNumber);
+                }
+                else
+                {
+                    Console.WriteLine(@"Vehicle already in Garage.
 Changed Status to In-Repair");
-                order.Status = eOrderStatus.InRepair;
+                    order.Status = eOrderStatus.InRepair;
+                }
             }
+            catch(Exception i_Exception)
+            {
+                Console.WriteLine(i_Exception.Message);
+            }
+            
         }
         
         private void showVehiclesByStatusMenu()
@@ -86,6 +97,7 @@ Changed Status to In-Repair");
             bool isValidInput = false;
             string input;
 
+            printMessageAsTitle("Show Vehicles By Status");
             while (!isValidInput)
             {
                 input = printVehicleOrderStatusMenuAndGetStatusFromUser();
@@ -104,31 +116,61 @@ Changed Status to In-Repair");
 
         private void changeVehicleStatus()
         {
+            printMessageAsTitle("Change Vehicle Status");
             if (m_Garage.IsEmpty())
             {
-                Console.WriteLine("There is no vehicle in the Garage!");
+                Console.WriteLine(k_EmptyGarageMessege);
             }
             else
             {
                 Order order = getOrderFromUserByLicenseNumber();
 
-                order.Status = getNewOrderStatusFromUser();
+                if (order != null)
+                {
+                    order.Status = getNewOrderStatusFromUser();
+                }
+                else
+                {
+                    Console.WriteLine("Couldn't find the vehicle!");
+                }
             }
         }
 
         private void addAirToWheels()
         {
-            string licenseNumber = getLicenseNumberFromUser();
+            printMessageAsTitle("Add Air To Wheels");
+            if (m_Garage.IsEmpty())
+            {
+                Console.WriteLine(k_EmptyGarageMessege);
+            }
+            else
+            {
+                try
+                {
+                    string licenseNumber = getLicenseNumberFromUser();
 
-            Console.WriteLine("Inflating license number: {0} wheels to max.", licenseNumber);
-            m_Garage.InflateAllWheelsToMax(licenseNumber);
+                    m_Garage.InflateAllWheelsToMax(licenseNumber);
+                    Console.WriteLine("Inflating vehicle license number: {0} wheels to max.", licenseNumber);
+                }
+                catch (ArgumentException i_Exception)
+                {
+                    Console.WriteLine(i_Exception.Message);
+                }
+                catch
+                {
+                    Console.WriteLine("General error occured");
+                }
+            }
         }
 
         private void addFuel()
         {
-            bool isValid = false;
-
-            while (!isValid)
+            printMessageAsTitle("Add fuel");
+            if (m_Garage.IsEmpty())
+            {
+                Console.WriteLine(k_EmptyGarageMessege);
+            }
+            else
             {
                 try
                 {
@@ -137,17 +179,16 @@ Changed Status to In-Repair");
                     eFuelType fuelType = getFuelTypeFromUser();
 
                     m_Garage.AddFuel(licenseNumber, fuelType, fuelAmmountToAdd);
-                    isValid = true;
                 }
-                catch(ValueOutOfRangeException ex)
+                catch (ValueOutOfRangeException ex)
                 {
                     Console.WriteLine($"Fuel tank cannot contain more fuel than {ex.MaxValue}!");
                 }
-                catch(ArgumentException ex)
+                catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine("General error occured!");
                 }
@@ -156,9 +197,12 @@ Changed Status to In-Repair");
 
         private void chargeBattery()
         {
-            bool isValid = false;
-
-            while (!isValid)
+            printMessageAsTitle("Charge Battery");
+            if (m_Garage.IsEmpty())
+            {
+                Console.WriteLine(k_EmptyGarageMessege);
+            }
+            else
             {
                 try
                 {
@@ -166,7 +210,6 @@ Changed Status to In-Repair");
                     float minutesToAdd = getEnergyAmountToAddFromUser();
 
                     m_Garage.ChargeVehicle(licenseNumber, minutesToAdd);
-                    isValid = true;
                 }
                 catch (ValueOutOfRangeException ex)
                 {
@@ -185,17 +228,25 @@ Changed Status to In-Repair");
 
         private void displayOrder()
         {
-            Console.WriteLine("Display Order:");
-            Order order = getOrderFromUserByLicenseNumber();
-            Console.WriteLine(order.ToString());
+            printMessageAsTitle("Display Order");
+            if (!m_Garage.IsEmpty())
+            {
+                Order order = getOrderFromUserByLicenseNumber();
+
+                Console.WriteLine(order != null ? order.ToString() : "Couldn't find this license number!");
+            }
+            else
+            {
+                Console.WriteLine(k_EmptyGarageMessege);
+            }
         }
 
         /******* Utility Printers Functions ********/
 
         private static void printMenu()
         {
-            Console.WriteLine($@"Welcome To Our Majestic Garage!
-Enter a number to choose an option:
+            printMessageAsTitle("Welcome To Our Majestic Garage!");
+            Console.WriteLine($@"Enter a number to choose an option:
 {(int)eMenuOptions.AddVehicle}. Add vehicle
 {(int)eMenuOptions.DisplayGarageVehicles}. Show vehicles in garage
 {(int)eMenuOptions.ChangeVehicleStatus}. Change vehicle status
@@ -254,13 +305,28 @@ Enter a number to choose an option:
         {
             string input;
 
-            Console.WriteLine("Choose a status:");
-            Console.WriteLine("================\n");
             printOrderStatuses();
             Console.WriteLine("Enter the corresponding number: ");
             input = Console.ReadLine();
 
             return input;
+        }
+
+        private static void printMessageAsTitle(string i_FunctionName)
+        {
+            printLineOfSameChars(k_TitlesChar,  i_FunctionName.Length);
+            Console.WriteLine(i_FunctionName);
+            printLineOfSameChars(k_TitlesChar, i_FunctionName.Length);
+
+        }
+
+        private static void printLineOfSameChars(string i_WantedChar, int i_NumOfPrintsInLine)
+        {
+            for (int i = 0; i < i_NumOfPrintsInLine; i++)
+            {
+                Console.Write(i_WantedChar);
+            }
+            Console.WriteLine();
         }
 
         /******* Utility "Get Data From User" Functions ********/
@@ -377,16 +443,15 @@ Enter a number to choose an option:
 
         private eOrderStatus getNewOrderStatusFromUser()
         {
-            string input;
             int choice;
 
             Console.WriteLine("Choose a new status:");
             printOrderStatuses();
-            input = Console.ReadLine();
-            while (!int.TryParse(input, out choice) || !Enum.IsDefined(typeof(eOrderStatus), choice))
+            choice = getIntFromUser();
+            while (!Enum.IsDefined(typeof(eOrderStatus), choice))
             {
                 Console.WriteLine("Invalid input! Please try again!");
-                input = Console.ReadLine();
+                choice = getIntFromUser();
             }
 
             return (eOrderStatus)choice;
@@ -410,19 +475,32 @@ Enter a number to choose an option:
 
         private static eFuelType getFuelTypeFromUser()
         {
-            string input;
             int choice;
 
             Console.WriteLine("Please enter the wanted fuel type:");
             printFuelTypes();
-            input = Console.ReadLine();
-            while (!int.TryParse(input, out choice) || Enum.IsDefined(typeof(eFuelType), choice))
+            choice = getIntFromUser();
+            while (Enum.IsDefined(typeof(eFuelType), choice))
             {
                 Console.WriteLine("Invalid innput! Please try Again");
-                input = Console.ReadLine();
+                choice = getIntFromUser();
             }
 
             return (eFuelType)choice;
+        }
+
+        private static int getIntFromUser()
+        {
+            string input = Console.ReadLine();
+            int res;
+
+            while(!int.TryParse(input, out res))
+            {
+                Console.WriteLine("Invalid value! Please enter an integer.");
+                input = Console.ReadLine();
+            }
+
+            return res;
         }
 
         /******* Validators Functions ********/

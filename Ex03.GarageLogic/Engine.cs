@@ -26,7 +26,7 @@
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(m_MaxCapacity, 0);
+                    throw new ValueOutOfRangeException(m_MaxCapacity, 0, "Engine ");
                 }
             }
         }

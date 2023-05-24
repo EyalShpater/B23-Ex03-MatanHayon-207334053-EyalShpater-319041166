@@ -68,8 +68,8 @@ namespace Ex03.GarageLogic
 
             if (eColor.TryParse(i_Attributes[0], out eColor color) && int.TryParse(i_Attributes[1], out int numOfDoors))
             {
-                m_Color = color;
-                m_NumOfDoors = numOfDoors; 
+                Color = color;
+                NumOfDoors = numOfDoors; 
             }
             else
             {
@@ -83,8 +83,8 @@ namespace Ex03.GarageLogic
 
             sb.AppendLine("Vehicle Type: Car");
             sb.AppendLine(base.ToString()); 
-            sb.AppendFormat("Color: {0}{1}", Color);
-            sb.AppendFormat("Number of Doors: {0}{1}", NumOfDoors);
+            sb.AppendFormat("Color: {0}", Color);
+            sb.AppendFormat("Number of Doors: {0}", NumOfDoors);
 
             return sb.ToString();
         }
