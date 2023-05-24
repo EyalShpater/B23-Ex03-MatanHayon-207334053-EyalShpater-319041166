@@ -53,7 +53,7 @@ namespace Ex03.GarageLogic
             return licenseNumbers;
         }
 
-        public void ChangeVehicleStatus(string i_LicenseNumber, eStatus i_Status)
+        public void ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
         {
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {

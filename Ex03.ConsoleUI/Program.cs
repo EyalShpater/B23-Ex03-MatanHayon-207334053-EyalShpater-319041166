@@ -4,8 +4,9 @@
     {
         public static void Main()
         {
+            ConsoleUI.printFuelTypes();
             ConsoleUI garage = new ConsoleUI();
-            garage.Run();
+            garage.RunGarageProgram();
             //now
         }
     }

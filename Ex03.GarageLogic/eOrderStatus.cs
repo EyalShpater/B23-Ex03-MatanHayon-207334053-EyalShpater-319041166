@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public enum eStatus
+    public enum eOrderStatus
     {
-        InRepair,
+        InRepair = 1,
         Completed,
         Paid
     }

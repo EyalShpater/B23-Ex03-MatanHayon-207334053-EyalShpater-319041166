@@ -17,7 +17,7 @@ namespace Ex03.ConsoleUI
             m_Garage = new Garage();
         }
 
-        public void Run()
+        public void RunGarageProgram()
         {
             bool endProgram = false;
 
@@ -91,7 +91,7 @@ Enter a number to choose an option:
             {
                 Console.WriteLine(@"Vehicle already in Garage.
 Changed Status to In-Repair");
-                order.Status = eStatus.InRepair;
+                order.Status = eOrderStatus.InRepair;
             }
         }
 
@@ -129,6 +129,7 @@ Changed Status to In-Repair");
             string[] dataInputFromUser = new string[uniqueAttributes.Length];
 
             Console.WriteLine("Enter Data for the next Attributes:");
+            Console.WriteLine("===================================");
             try
             {
                 for (int index = 0; index < uniqueAttributes.Length; index++)
@@ -206,38 +207,48 @@ Changed Status to In-Repair");
 
         private void showVehiclesByStatusMenu()
         {
-            int userInput=0;
+            int userInput;
             bool isValidInput = false;
+            string input;
 
             while (!isValidInput)
             {
-                Console.WriteLine("Choose a status:");
-                printOrderStatuses();
-                Console.WriteLine("Enter the corresponding number: ");
-                if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > Enum.GetNames(typeof(eStatus)).Length)
+                input = printVehicleOrderStatusMenuAndGetStatusFromUser();
+                if (int.TryParse(input, out userInput) && Enum.IsDefined(typeof(eOrderStatus), userInput))
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    isValidInput = true;
+                    eOrderStatus status = (eOrderStatus)(userInput);
+                    DisplayVehiclesByStatus(status);
                 }
                 else
                 {
-                    isValidInput = true;
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
                 }
             }
-
-            eStatus status = (eStatus)(userInput - 1);
-            DisplayVehiclesByStatus(status);
         }
 
+        private string printVehicleOrderStatusMenuAndGetStatusFromUser()
+        {
+            string input;
+
+            Console.WriteLine("Choose a status:");
+            Console.WriteLine("================\n");
+            printOrderStatuses();
+            Console.WriteLine("Enter the corresponding number: ");
+            input = Console.ReadLine();
+
+            return input;
+        }
 
         private static void printOrderStatuses()
         {
-            for (int i = 0; i < Enum.GetNames(typeof(eStatus)).Length; i++)
+            for (int i = 1; i <= Enum.GetNames(typeof(eOrderStatus)).Length; i++)
             {
-                Console.WriteLine($"{i + 1}. {Enum.GetName(typeof(eStatus), i)}");
+                Console.WriteLine($"{i}. {Enum.GetName(typeof(eOrderStatus), i)}");
             }
         }
 
-        private void DisplayVehiclesByStatus(eStatus status)
+        private void DisplayVehiclesByStatus(eOrderStatus status)
         {
             List<string> licenseNumbers = m_Garage.GetLicenseNumbersByStatus(status.ToString());
 
@@ -290,29 +301,21 @@ Changed Status to In-Repair");
             }
         }
 
-        private eStatus getNewStatusFromUser()
+        private eOrderStatus getNewStatusFromUser()
         {
             string input;
-            int res;
+            int choice;
 
             Console.WriteLine("Choose a new status:");
             printOrderStatuses();
             input = Console.ReadLine();
-
-            while (!isOrderStatusValid(input, out res))
+            while (!int.TryParse(input, out choice) || !Enum.IsDefined(typeof(eOrderStatus), choice))
             {
                 Console.WriteLine("Invalid input! Please try again!");
                 input = Console.ReadLine();
             }
             
-            return (eStatus)res;
-        }
-
-        private bool isOrderStatusValid(string i_Status, out int o_Choice)
-        {          
-            int numOfStatuses = Enum.GetNames(typeof(eStatus)).Length;
-
-            return int.TryParse(i_Status, out o_Choice) && o_Choice <= numOfStatuses && o_Choice >= 1;
+            return (eOrderStatus)choice;
         }
 
         private void AddAirToWheels()
@@ -339,6 +342,14 @@ Changed Status to In-Repair");
             }
 
 
+        }
+
+        public static void printFuelTypes()
+        {
+            foreach(string fuelType in Enum.GetNames(typeof(eFuelType)))
+            {
+                Console.WriteLine($"{(int)Enum.Parse(typeof(eFuelType), fuelType)}. {fuelType}");
+            }
         }
 
         private void ChargeBattery()

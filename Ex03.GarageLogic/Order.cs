@@ -8,14 +8,14 @@ namespace Ex03.GarageLogic
         private Vehicle m_Vehicle;
         private string m_CustomerName;
         private string m_PhoneNumber;
-        private eStatus m_Status;
+        private eOrderStatus m_Status;
 
         public Order(Vehicle i_Vehicle, string i_CustomerName, string i_PhoneNumber)
         {
             Vehicle = i_Vehicle;
             CustomerName = i_CustomerName;
             PhoneNumber = i_PhoneNumber;
-            m_Status = eStatus.InRepair;
+            m_Status = eOrderStatus.InRepair;
         }
 
         public Vehicle Vehicle
@@ -84,7 +84,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public eStatus Status
+        public eOrderStatus Status
         {
             get 
             { 
