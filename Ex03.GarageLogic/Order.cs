@@ -100,11 +100,13 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             return string.Format(
-@"{0}
+@$"{0}
 Customer Name: {1}
-Phone Nuner: {2}
+Phone Number: {2}
 Status: {3}
-", m_Vehicle.ToString(), m_CustomerName, m_PhoneNumber, m_Status.ToString());
+Car Details:
+{4}
+", m_Vehicle.ToString(), m_CustomerName, m_PhoneNumber, m_Status.ToString(), Vehicle.ToString());
         }
 
         public override int GetHashCode()

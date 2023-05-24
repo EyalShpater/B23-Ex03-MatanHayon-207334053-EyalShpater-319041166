@@ -259,10 +259,10 @@ Changed Status to In-Repair");
 
         private void ChangeVehicleStatus()
         {
-            string licenseNumber = askLicenseNumberFromUser();
-            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+           // string licenseNumber = askLicenseNumberFromUser();
+        //   Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
 
-            order.Status = 
+          //  order.Status = 
 
         }
 
@@ -270,10 +270,8 @@ Changed Status to In-Repair");
         {
             string licenseNumber = askLicenseNumberFromUser();
 
-            Console.WriteLine("Add air to wheels:");
-            Console.WriteLine("Enter wanted PSI units to add:");
-            string wantedPsiUnits = Console.ReadLine();
-            m_Garage.
+            Console.WriteLine("Inflating license number: {0} wheels to max.", licenseNumber);
+            m_Garage.InflateAllWheelsToMax(licenseNumber);
         }
 
         private void AddFuel()
@@ -288,7 +286,10 @@ Changed Status to In-Repair");
 
         private static void DisplayOrder()
         {
-            Console.WriteLine("Display Order");
+            Console.WriteLine("Display Order:");
+            string licenseNumber = askLicenseNumberFromUser();
+            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+            Console.WriteLine(order.ToString());
         }
 
         private void printCars()
