@@ -11,7 +11,10 @@
 
         public override string ToString()
         {
-            return string.Format("Electric Engine: {0}", base.ToString());
+            return string.Format(@"Electric Engine: 
+===============
+
+{0}", base.ToString());
         }
     }
 }

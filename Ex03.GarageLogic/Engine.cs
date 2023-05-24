@@ -26,7 +26,7 @@
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(m_MaxCapacity, 0, "Engine ");
+                    throw new ValueOutOfRangeException(m_MaxCapacity, 0, "Engine: ");
                 }
             }
         }
@@ -58,8 +58,7 @@
 
         public override string ToString()
         {
-            return string.Format(
-@"Current Energy Level: {0}
+            return string.Format(@"Current Energy Level: {0}
 Max Capacity: {1}",
                 m_CurrentEnergyLevel, m_MaxCapacity);
         }

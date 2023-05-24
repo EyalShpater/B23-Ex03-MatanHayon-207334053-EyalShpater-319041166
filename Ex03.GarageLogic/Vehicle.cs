@@ -111,8 +111,6 @@ namespace Ex03.GarageLogic
 
         public abstract void SetUniqueAttributes(string[] i_Features);
 
-        
-
         private void updateEnergyPercentage()
         {
             m_EnergyLevel = (m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity) * 100;
@@ -122,12 +120,18 @@ namespace Ex03.GarageLogic
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendFormat(
-        @"Model: {0}
+            sb.AppendFormat(@"Model: {0}
 License Number: {1}
 Energy Level: {2}%
+
+Engine:
+=======
 {3}
-", m_Model, m_LicenseNumber, m_EnergyLevel, m_Engine.ToString());
+
+All Wheels:
+===========
+{4}
+", m_Model, m_LicenseNumber, m_EnergyLevel, m_Engine.ToString(), m_Wheels[0].ToString());
 
             int wheelNumber = 0;
             foreach (Wheel wheel in m_Wheels)

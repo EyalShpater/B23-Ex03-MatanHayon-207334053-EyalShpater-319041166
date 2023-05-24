@@ -25,6 +25,7 @@ namespace Ex03.ConsoleUI
         {
             bool endProgram = false;
 
+            printMessageAsTitle("Welcome To Our Majestic Garage!");
             while (!endProgram)
             {
                 printMenu();
@@ -93,46 +94,62 @@ Changed Status to In-Repair");
         
         private void showVehiclesByStatusMenu()
         {
-            int userInput;
-            bool isValidInput = false;
-            string input;
-
-            printMessageAsTitle("Show Vehicles By Status");
-            while (!isValidInput)
+            try
             {
-                input = printVehicleOrderStatusMenuAndGetStatusFromUser();
-                if (int.TryParse(input, out userInput) && Enum.IsDefined(typeof(eOrderStatus), userInput))
+                int userInput;
+                bool isValidInput = false;
+                string input;
+
+                printMessageAsTitle("Show Vehicles By Status");
+                while (!isValidInput)
                 {
-                    isValidInput = true;
-                    eOrderStatus status = (eOrderStatus)(userInput);
-                    displayVehiclesByStatus(status);
+                    input = printVehicleOrderStatusMenuAndGetStatusFromUser();
+                    if (int.TryParse(input, out userInput) && Enum.IsDefined(typeof(eOrderStatus), userInput))
+                    {
+                        isValidInput = true;
+                        eOrderStatus status = (eOrderStatus)(userInput);
+                        displayVehiclesByStatus(status);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number.");
+                    }
                 }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                }
+            }
+
+            catch (Exception i_Exception)
+            {
+                Console.WriteLine(i_Exception.Message);
             }
         }
 
         private void changeVehicleStatus()
         {
             printMessageAsTitle("Change Vehicle Status");
-            if (m_Garage.IsEmpty())
+            try
             {
-                Console.WriteLine(k_EmptyGarageMessege);
-            }
-            else
-            {
-                Order order = getOrderFromUserByLicenseNumber();
-
-                if (order != null)
+                if (m_Garage.IsEmpty())
                 {
-                    order.Status = getNewOrderStatusFromUser();
+                    Console.WriteLine(k_EmptyGarageMessege);
                 }
                 else
                 {
-                    Console.WriteLine("Couldn't find the vehicle!");
+                    Order order = getOrderFromUserByLicenseNumber();
+
+                    if (order != null)
+                    {
+                        order.Status = getNewOrderStatusFromUser();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Couldn't find the vehicle!");
+                    }
                 }
+            }
+
+            catch (Exception i_Exception)
+            {
+                Console.WriteLine(i_Exception.Message);
             }
         }
 
@@ -245,8 +262,8 @@ Changed Status to In-Repair");
 
         private static void printMenu()
         {
-            printMessageAsTitle("Welcome To Our Majestic Garage!");
-            Console.WriteLine($@"Enter a number to choose an option:
+            Console.WriteLine($@"
+Enter a number to choose an option:
 {(int)eMenuOptions.AddVehicle}. Add vehicle
 {(int)eMenuOptions.DisplayGarageVehicles}. Show vehicles in garage
 {(int)eMenuOptions.ChangeVehicleStatus}. Change vehicle status
@@ -314,6 +331,7 @@ Changed Status to In-Repair");
 
         private static void printMessageAsTitle(string i_FunctionName)
         {
+            Console.Clear();
             printLineOfSameChars(k_TitlesChar,  i_FunctionName.Length);
             Console.WriteLine(i_FunctionName);
             printLineOfSameChars(k_TitlesChar, i_FunctionName.Length);
@@ -333,11 +351,26 @@ Changed Status to In-Repair");
 
         private Order getOrderDataFromUser(string i_LicenseNumber)
         {
+            bool isValid = false;
+            Order order;
+
             getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle);
-            Order order = new Order(vehicle, customername, phoneNumber);
-            Console.WriteLine("Object was born"); //
-            getAndSetGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
-            getAndSetUniqueDataForVehicleFromUser(vehicle);
+            order = new Order(vehicle, customername, phoneNumber);
+            while (!isValid)
+            {
+                try
+                {
+                    getAndSetGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
+                    getAndSetUniqueDataForVehicleFromUser(vehicle);
+                    isValid = true;
+                }
+
+                catch (Exception i_Exception)
+                { 
+                    Console.WriteLine(i_Exception.Message);
+                }
+            }
+
             m_Garage.AddNewOrder(order);
 
             return order;
@@ -366,21 +399,14 @@ Changed Status to In-Repair");
 
             Console.WriteLine("Enter Data for the next Attributes:");
             Console.WriteLine("===================================");
-            try
-            {
-                for (int index = 0; index < uniqueAttributes.Length; index++)
-                {
-                    Console.WriteLine(uniqueAttributes[index] + ":");
-                    dataInputFromUser[index] = Console.ReadLine();
-                }
 
-                io_Vehicle.SetUniqueAttributes(dataInputFromUser);
+            for (int index = 0; index < uniqueAttributes.Length; index++)
+            {
+                Console.WriteLine(uniqueAttributes[index] + ":");
+                dataInputFromUser[index] = Console.ReadLine();
             }
 
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error occurred while getting unique data for vehicle: " + ex.Message);
-            }
+            io_Vehicle.SetUniqueAttributes(dataInputFromUser);
         }
 
         private static void getAndSetGeneralDataForVehicleFromUser(Vehicle o_Vehicle, string i_LicenseNumber)
@@ -389,7 +415,7 @@ Changed Status to In-Repair");
             string currentEnergyAmmount = Console.ReadLine();
             Console.WriteLine("Enter wheels manufactorer:");
             string wheelsManufatorer = Console.ReadLine();
-            Console.WriteLine("Enter wheels AirPressure");
+            Console.WriteLine("Enter wheels air pressure");
             string wheelsAirPressure = Console.ReadLine();
             Console.WriteLine("Enter vehicle model:");
             string carModel = Console.ReadLine();
@@ -480,7 +506,7 @@ Changed Status to In-Repair");
             Console.WriteLine("Please enter the wanted fuel type:");
             printFuelTypes();
             choice = getIntFromUser();
-            while (Enum.IsDefined(typeof(eFuelType), choice))
+            while (!Enum.IsDefined(typeof(eFuelType), choice))
             {
                 Console.WriteLine("Invalid innput! Please try Again");
                 choice = getIntFromUser();

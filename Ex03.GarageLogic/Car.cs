@@ -59,7 +59,7 @@ namespace Ex03.GarageLogic
 
         public override string[] GetUniqueAttributes()
         {
-            return new string[] { "Colour", "Number Of Doors" };
+            return new string[] { "Color", "Number Of Doors" };
         }
 
         public override void SetUniqueAttributes(string[] i_Attributes)

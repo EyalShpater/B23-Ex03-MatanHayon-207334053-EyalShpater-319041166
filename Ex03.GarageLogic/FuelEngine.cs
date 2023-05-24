@@ -34,8 +34,9 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(
-@"*** Fuel Engine *** 
+            return string.Format(@"Fuel Engine
+============
+
 Fuel Type: {0}
 {1}", r_FuelType.ToString(), base.ToString());
         }
