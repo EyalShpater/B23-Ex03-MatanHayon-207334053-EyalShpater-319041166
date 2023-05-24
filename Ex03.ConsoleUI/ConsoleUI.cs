@@ -263,8 +263,8 @@ Changed Status to In-Repair");
 
         private void ChangeVehicleStatus()
         {
-           // string licenseNumber = askLicenseNumberFromUser();
-        //   Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+            string licenseNumber = askLicenseNumberFromUser();
+            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
 
             while (order == null)
             {
@@ -311,7 +311,7 @@ Changed Status to In-Repair");
             Console.WriteLine("Charge Battery");
         }
 
-        private static void DisplayOrder()
+        private void DisplayOrder()
         {
             Console.WriteLine("Display Order:");
             string licenseNumber = askLicenseNumberFromUser();
@@ -323,8 +323,5 @@ Changed Status to In-Repair");
         {
             Console.WriteLine("Existing Cars in the Garage");
         }
-
-
-        
     }
 }
