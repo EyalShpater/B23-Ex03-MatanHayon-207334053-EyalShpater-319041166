@@ -97,20 +97,14 @@ Changed Status to In-Repair");
 
         private Order getOrderDataFromUser(string i_LicenseNumber)
         {
-            try
-            {
-                getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle);
-                Order order = new Order(vehicle, customername, phoneNumber);
-                Console.WriteLine("Object was born"); //
-                getUniqueDataForVehicleFromUser(order,i_LicenseNumber);
-                m_Garage.AddNewOrder(order);
+            getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle);
+            Order order = new Order(vehicle, customername, phoneNumber);
+            Console.WriteLine("Object was born"); //
+            getAndSetGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
+            getAndSetUniqueDataForVehicleFromUser(vehicle);
+            m_Garage.AddNewOrder(order);
 
-                return order;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error occurred while getting order data: " + ex.Message);
-            }
+            return order;
         }
 
         private void getCustomerDetails(out string o_Name, out string o_PhoneNumber, out Vehicle o_Vehicle)
@@ -124,36 +118,35 @@ Changed Status to In-Repair");
 
         private Vehicle getVehicleFromUser()
         {
-            int selectedVehicleType = GetVehicleTypeChoiceFromUser();
+            int selectedVehicleType = getVehicleTypeChoiceFromUser();
 
             return VehicleFactory.CreateVehicle(selectedVehicleType);
         }
 
-        private static void getUniqueDataForVehicleFromUser(Order order,string i_LicenseNumber)
+        private static void getAndSetUniqueDataForVehicleFromUser(Vehicle io_Vehicle)
         {
-            Vehicle vehicle = order.Vehicle;
-            string[] uniqueAttributes = vehicle.GetUniqueAttributes();
-            string[] dataInputFromUser = new string[uniqueAttributes.Length + 1];
+            string[] uniqueAttributes = io_Vehicle.GetUniqueAttributes();
+            string[] dataInputFromUser = new string[uniqueAttributes.Length];
 
-            dataInputFromUser[0] = i_LicenseNumber;
             Console.WriteLine("Enter Data for the next Attributes:");
             try
             {
                 for (int index = 0; index < uniqueAttributes.Length; index++)
                 {
                     Console.WriteLine(uniqueAttributes[index] + ":");
-                    dataInputFromUser[index+1] = Console.ReadLine(); //first place in array is License number
+                    dataInputFromUser[index] = Console.ReadLine();
                 }
-                getGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
-                vehicle.SetUniqueAttributes(dataInputFromUser);
+
+                io_Vehicle.SetUniqueAttributes(dataInputFromUser);
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine("Error occurred while getting unique data for vehicle: " + ex.Message);
             }
         }
 
-        private static void getGeneralDataForVehicleFromUser(Vehicle vehicle, string i_LicenseNumber)
+        private static void getAndSetGeneralDataForVehicleFromUser(Vehicle o_Vehicle, string i_LicenseNumber)
         {
             Console.WriteLine("Enter current energy ammount:");
             string currentEnergyAmmount = Console.ReadLine();
@@ -164,10 +157,11 @@ Changed Status to In-Repair");
             Console.WriteLine("Enter Car model:");
             string carModel = Console.ReadLine();
 
-            vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount, wheelsManufatorer, wheelsAirPressure, carModel);
+            o_Vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount, 
+                wheelsManufatorer, wheelsAirPressure, carModel);
         }
 
-        private int GetVehicleTypeChoiceFromUser()
+        private int getVehicleTypeChoiceFromUser()
         {
             bool isValidChoice = false;
             int selectedIndex = k_InvalidCohice;
@@ -178,11 +172,8 @@ Changed Status to In-Repair");
             {
                 printVehiclesTypes();   
                 typeChoice = Console.ReadLine();
-                if (int.TryParse(typeChoice, out selectedIndex) && isValidValueInRange(selectedIndex, numOfTypes, 1))
-                {
-                    isValidChoice = true;
-                }
-                else
+                isValidChoice = isValidVehicleTypeChoise(typeChoice, ref selectedIndex, numOfTypes);
+                if (!isValidChoice)
                 {
                     Console.WriteLine("Invalid vehicle type choice. Please try again.");
                 }
@@ -200,6 +191,12 @@ Changed Status to In-Repair");
             {
                 Console.WriteLine($"{i + 1}. {vehiclesTypes[i]}");
             }
+        }
+
+        private bool isValidVehicleTypeChoise(string i_Choice, ref int io_SelectedIndex, int i_NumOfTypes)
+        {
+            return int.TryParse(i_Choice, out io_SelectedIndex) &&
+                    isValidValueInRange(io_SelectedIndex, i_NumOfTypes, 1);
         }
 
         private bool isValidValueInRange(int i_Value, int i_Max, int i_Min)

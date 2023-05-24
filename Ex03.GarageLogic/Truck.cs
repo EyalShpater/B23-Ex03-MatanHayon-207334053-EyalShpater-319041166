@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
         private const float k_MaxWheelAirPressure = 26f;
         internal const float k_MaxFuelTank = 135f;
         internal const eFuelType k_eFuelType = eFuelType.Soler;
-        private const int k_NumOfChangeableAttributes = 3;
+        private const int k_NumOfChangeableAttributes = 2;
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
@@ -61,9 +61,9 @@ namespace Ex03.GarageLogic
 
         public override void SetUniqueAttributes(string[] i_Attributes)
         {
-            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfChangeableAttributes, i_Attributes.Length);
-            bool isDangerousValidAnswer = i_Attributes[0].ToLower() == "yes";
+            bool isDangerousValidAnswer = i_Attributes[0].ToLower() == "yes" || i_Attributes[0].ToLower() == "no";
 
+            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfChangeableAttributes, i_Attributes.Length);
             if (isDangerousValidAnswer && float.TryParse(i_Attributes[1], out float volume))
             {
                 IsDangerousMaterials = isDangerousValidAnswer;

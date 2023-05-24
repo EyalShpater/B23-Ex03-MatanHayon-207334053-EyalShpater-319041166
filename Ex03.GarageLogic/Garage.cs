@@ -17,6 +17,7 @@ namespace Ex03.GarageLogic
         public Order GetOrderByLicenseNumber(string i_LicenseNumber)
         {
             Order order = null;
+
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 order = m_Orders[i_LicenseNumber];
@@ -25,9 +26,9 @@ namespace Ex03.GarageLogic
             return order;
         }
 
-        public Vehicle CreateNewVehicle(eVehicleType i_Etype)
+        public Vehicle CreateNewVehicle(int i_Type)
         {
-            Vehicle newVehicle = null; //VehicleFactory.CreateVehicle(i_Etype);
+            Vehicle newVehicle = VehicleFactory.CreateVehicle(i_Type);
 
             return newVehicle;
         }

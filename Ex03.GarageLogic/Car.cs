@@ -6,7 +6,6 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
-        //Regular Car consts:
         private const int k_NumOfWheels = 5;
         private const float k_MaxWheelAirPressure = 33;
         internal const eFuelType k_FuelType = eFuelType.Octan95;
@@ -14,7 +13,7 @@ namespace Ex03.GarageLogic
         internal const float k_MaxBatterySize = 5.2f;
         private const int k_MinNumOfDoors = 2;
         private const int k_MaxNumOfDoors = 5;
-        private const int k_NumOfAttributes = 3;
+        private const int k_NumOfAttributes = 2;
         private eColor m_Color;
         private int m_NumOfDoors;
 
@@ -58,7 +57,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-       
         public override string[] GetUniqueAttributes()
         {
             return new string[] { "Colour", "Number Of Doors" };
@@ -68,9 +66,7 @@ namespace Ex03.GarageLogic
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
 
-            this.LicenseNumber = i_Attributes[0];
-
-            if (eColor.TryParse(i_Attributes[1], out eColor color) && int.TryParse(i_Attributes[2], out int numOfDoors))
+            if (eColor.TryParse(i_Attributes[0], out eColor color) && int.TryParse(i_Attributes[1], out int numOfDoors))
             {
                 m_Color = color;
                 m_NumOfDoors = numOfDoors; 
@@ -86,7 +82,7 @@ namespace Ex03.GarageLogic
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine("Vehicle Type: Car");
-            sb.AppendLine(base.ToString()); // Include the base class (Vehicle) details
+            sb.AppendLine(base.ToString()); 
             sb.AppendFormat("Color: {0}{1}", Color);
             sb.AppendFormat("Number of Doors: {0}{1}", NumOfDoors);
 

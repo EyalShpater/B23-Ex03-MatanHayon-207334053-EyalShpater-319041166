@@ -158,14 +158,12 @@ Energy Level: {2}%
         }
 
         public void SetGeneralAttributes(string i_LicenseNumber, string i_CurrentEnergyAmmount, 
-            string i_WheelsManufatorer, string i_WheelsAirPressure, string i_CarModel)
+            string i_WheelsManufactorer, string i_WheelsAirPressure, string i_CarModel)
         {
-            this.LicenseNumber = i_LicenseNumber;
-
-            //try
-            //{
-                
-            //}
+            LicenseNumber = i_LicenseNumber;
+            //m_Engine.
+            Model = i_CarModel;
+            //m_Wheels = SetWheelsAttributes(i_ManufacturerName, i_)
         }
 
         protected List<Wheel> CreateWheelsList(int i_NumOfWheels, float i_MaxAirPressure)
