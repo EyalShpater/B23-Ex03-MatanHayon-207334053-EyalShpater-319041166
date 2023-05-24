@@ -66,7 +66,7 @@ namespace Ex03.GarageLogic
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfChangeableAttributes, i_Attributes.Length);
             if (isDangerousValidAnswer && float.TryParse(i_Attributes[1], out float volume))
             {
-                IsDangerousMaterials = isDangerousValidAnswer;
+                IsDangerousMaterials = i_Attributes[0].ToLower() == "yes";
                 CargoVolume = volume;
             }
             else

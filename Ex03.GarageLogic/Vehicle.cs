@@ -6,8 +6,6 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-        private const int k_MaxLicenseLength = 8;
-        private const int k_MaxModelLength = 30;
         protected string m_Model;
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
@@ -32,7 +30,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value.Length <= k_MaxLicenseLength && value.Length > 0) 
+                if (value.Length > 0)
                 {
                     if (int.TryParse(value, out int dummyInt))
                     {
@@ -45,7 +43,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(k_MaxLicenseLength, 1);
+                    throw new ValueOutOfRangeException(null, 1);
                 }
             }
         }
@@ -72,7 +70,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(k_MaxModelLength, 1);
+                    throw new ValueOutOfRangeException(null, 1);
                 }
             }
         }
@@ -113,15 +111,7 @@ namespace Ex03.GarageLogic
 
         public abstract void SetUniqueAttributes(string[] i_Features);
 
-        public void SetWheelsAttributes(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
-        {
-            foreach(Wheel wheel in m_Wheels)
-            {
-                wheel.ManufacturerName = i_ManufacturerName;
-                wheel.MaxAirPressure = i_MaxAirPressure;
-                wheel.AddAir(i_CurrentAirPressure);
-            }
-        }
+        
 
         private void updateEnergyPercentage()
         {
@@ -161,9 +151,18 @@ Energy Level: {2}%
             string i_WheelsManufactorer, string i_WheelsAirPressure, string i_CarModel)
         {
             LicenseNumber = i_LicenseNumber;
-            //m_Engine.
+            m_Engine.CurrentEnergyLevel = float.Parse(i_CurrentEnergyAmmount);
+            updateEnergyPercentage();
             Model = i_CarModel;
-            //m_Wheels = SetWheelsAttributes(i_ManufacturerName, i_)
+            setAllWheelsAttributes(i_WheelsManufactorer, i_WheelsAirPressure);
+        }
+
+        private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)
+        {
+            foreach(Wheel wheel in m_Wheels)
+            {
+                wheel.SetAttributes(i_Manufactorer, i_AirPressure);
+            }
         }
 
         protected List<Wheel> CreateWheelsList(int i_NumOfWheels, float i_MaxAirPressure)
@@ -172,7 +171,7 @@ Energy Level: {2}%
 
             for (int i = 0; i < i_NumOfWheels; i++)
             {
-                wheels[i] = new Wheel(i_MaxAirPressure);
+                wheels.Add(new Wheel(i_MaxAirPressure));
             }
 
             return wheels;

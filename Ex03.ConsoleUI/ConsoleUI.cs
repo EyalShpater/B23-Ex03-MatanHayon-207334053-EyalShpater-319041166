@@ -154,7 +154,7 @@ Changed Status to In-Repair");
             string wheelsManufatorer = Console.ReadLine();
             Console.WriteLine("Enter wheels AirPressure");
             string wheelsAirPressure = Console.ReadLine();
-            Console.WriteLine("Enter Car model:");
+            Console.WriteLine("Enter vehicle model:");
             string carModel = Console.ReadLine();
 
             o_Vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount, 
@@ -179,7 +179,7 @@ Changed Status to In-Repair");
                 }
             }
 
-            return selectedIndex;
+            return selectedIndex - 1;
         }
 
         private void printVehiclesTypes()
@@ -251,24 +251,37 @@ Changed Status to In-Repair");
             }
         }
 
-
-
-        private static void ChangeVehicleStatus()
+        private static string askLicenseNumberFromUser()
         {
-            Console.WriteLine("Change Vehicle Status");
+            Console.WriteLine("Please enter license number:");
+            return Console.ReadLine();
         }
 
-        private static void AddAirToWheels()
+        private void ChangeVehicleStatus()
         {
-            Console.WriteLine("Add Air to Wheels");
+            string licenseNumber = askLicenseNumberFromUser();
+            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+
+            order.Status = 
+
         }
 
-        private static void AddFuel()
+        private void AddAirToWheels()
+        {
+            string licenseNumber = askLicenseNumberFromUser();
+
+            Console.WriteLine("Add air to wheels:");
+            Console.WriteLine("Enter wanted PSI units to add:");
+            string wantedPsiUnits = Console.ReadLine();
+            m_Garage.
+        }
+
+        private void AddFuel()
         {
             Console.WriteLine("Add Fuel");
         }
 
-        private static void ChargeBattery()
+        private void ChargeBattery()
         {
             Console.WriteLine("Charge Battery");
         }
@@ -278,7 +291,7 @@ Changed Status to In-Repair");
             Console.WriteLine("Display Order");
         }
 
-        private static void printCars()
+        private void printCars()
         {
             Console.WriteLine("Existing Cars in the Garage");
         }

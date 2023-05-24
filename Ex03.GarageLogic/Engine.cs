@@ -16,7 +16,19 @@
             get 
             { 
                 return m_CurrentEnergyLevel; 
-            } 
+            }
+
+            set
+            {
+                if (value <= m_MaxCapacity  && value >= 0)
+                {
+                    m_CurrentEnergyLevel = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(m_MaxCapacity, 0);
+                }
+            }
         }
 
         public float MaxCapacity
@@ -25,6 +37,7 @@
             {
                 return m_MaxCapacity;
             }
+
             set
             {
                 if (value > 0)
@@ -40,14 +53,7 @@
 
         protected void AddEnergy(float i_EnergyToAdd)
         {
-            if (this.CurrentEnergyLevel + i_EnergyToAdd <= m_MaxCapacity)
-            {
-                m_CurrentEnergyLevel += i_EnergyToAdd;
-            }
-            else
-            {
-                throw new ValueOutOfRangeException(m_MaxCapacity, 0);
-            }
+            CurrentEnergyLevel += i_EnergyToAdd;
         }
 
         public override string ToString()
