@@ -261,7 +261,7 @@ Changed Status to In-Repair");
             return Console.ReadLine();
         }
 
-        private void ChangeVehicleStatus()
+        private Order getOrderFromUserByLicenseNumber()
         {
             string licenseNumber = askLicenseNumberFromUser();
             Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
@@ -270,9 +270,24 @@ Changed Status to In-Repair");
             {
                 Console.WriteLine("Couldn't find this license number! Please try again.");
                 licenseNumber = askLicenseNumberFromUser();
+                order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
             }
 
-            order.Status = getNewStatusFromUser();
+            return order;
+        }
+
+        private void ChangeVehicleStatus()
+        {
+            if (m_Garage.IsEmpty())
+            {
+                Console.WriteLine("There is no vehicle in the Garage!");
+            }
+            else
+            {
+                Order order = getOrderFromUserByLicenseNumber();
+
+                order.Status = getNewStatusFromUser();
+            }
         }
 
         private eStatus getNewStatusFromUser()
@@ -283,15 +298,22 @@ Changed Status to In-Repair");
             Console.WriteLine("Choose a new status:");
             printOrderStatuses();
             input = Console.ReadLine();
-            while (!int.TryParse(input, out res))
-            { 
-                Console.WriteLine("Invalid Input! Try Again!");
+
+            while (!isOrderStatusValid(input, out res))
+            {
+                Console.WriteLine("Invalid input! Please try again!");
                 input = Console.ReadLine();
             }
-
+            
             return (eStatus)res;
         }
 
+        private bool isOrderStatusValid(string i_Status, out int o_Choice)
+        {          
+            int numOfStatuses = Enum.GetNames(typeof(eStatus)).Length;
+
+            return int.TryParse(i_Status, out o_Choice) && o_Choice <= numOfStatuses && o_Choice >= 1;
+        }
 
         private void AddAirToWheels()
         {
@@ -303,19 +325,43 @@ Changed Status to In-Repair");
 
         private void AddFuel()
         {
-            Console.WriteLine("Add Fuel");
+            Order order = getOrderFromUserByLicenseNumber();
+
+            if (!order.Vehicle.IsElectric())
+            {
+                string input;
+
+                Console.WriteLine("Please enter ");
+            }
+            else
+            {
+                Console.WriteLine("Error! This vehicle has an electric engine!");
+            }
+
+
         }
 
         private void ChargeBattery()
         {
-            Console.WriteLine("Charge Battery");
+            Order order = getOrderFromUserByLicenseNumber();
+
+            if (order.Vehicle.IsElectric())
+            {
+                string input;
+
+                Console.WriteLine("Please enter how many minutes to add");
+                input = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Error! This vehicle has a fuel engine!");
+            }
         }
 
         private void DisplayOrder()
         {
             Console.WriteLine("Display Order:");
-            string licenseNumber = askLicenseNumberFromUser();
-            Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
+            Order order = getOrderFromUserByLicenseNumber();
             Console.WriteLine(order.ToString());
         }
 

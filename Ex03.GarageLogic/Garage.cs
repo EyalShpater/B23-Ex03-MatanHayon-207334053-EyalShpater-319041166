@@ -110,5 +110,10 @@ namespace Ex03.GarageLogic
             return isSuccessful;
         }
 
+        public bool IsEmpty()
+        {
+            return m_Orders.Count == 0;
+        }
+
     }
 }

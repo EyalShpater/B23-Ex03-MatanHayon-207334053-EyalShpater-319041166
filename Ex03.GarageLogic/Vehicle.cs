@@ -177,6 +177,11 @@ Energy Level: {2}%
             return wheels;
         }
 
+        public bool IsElectric()
+        {
+            return m_Engine is ElectricEngine;
+        }
+
         public override int GetHashCode()
         {
             return m_LicenseNumber.GetHashCode();
