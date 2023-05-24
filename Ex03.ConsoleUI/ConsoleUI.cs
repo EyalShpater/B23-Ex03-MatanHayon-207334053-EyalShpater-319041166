@@ -74,7 +74,6 @@ Enter a number to choose an option:
 {(int)eMenuOptions.Exit}. Exit");
         }
 
-
         private void AddVehicle()
         {
             string licenseNumber;
