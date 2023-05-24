@@ -53,60 +53,70 @@ namespace Ex03.GarageLogic
             return licenseNumbers;
         }
 
-        public void ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
+        public bool ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
         {
+            bool isSucceed = false;
+
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 m_Orders[i_LicenseNumber].Status = i_Status;
+                isSucceed = true;
             }
-            else
-            {
-                //throw exception
-            }
+            
+            return isSucceed;
         }
 
-        public void InflateAllWheelsToMax(string i_LicenseNumber)
+        public bool InflateAllWheelsToMax(string i_LicenseNumber)
         {
+            bool isSucceed = false;
+
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 m_Orders[i_LicenseNumber].Vehicle.InflateAllWheels();
+                isSucceed = true;
             }
-            else
-            {
-                //throw exception
-            }
+
+            return isSucceed;
         }
 
-        public void AddFuel(string i_LicenseNumber, eFuelType i_FuelType, float i_Amount)
+        public bool AddFuel(string i_LicenseNumber, eFuelType i_FuelType, float i_Ammount)
         {
-            
+            bool isSucceed = false;
+            Order order = GetOrderByLicenseNumber(i_LicenseNumber);
+
+            if(order!=null)
+            {
+                order.Vehicle.AddEnergy(i_Ammount, i_FuelType);
+                isSucceed = true;
+            }
+
+            return isSucceed;
         }
 
-        public void ChargeVehicle(string i_LicenseNumber, float i_Level)
+        public bool ChargeVehicle(string i_LicenseNumber, float i_Ammount)
         {
-            
-        }
+            bool isSucceed = false;
+            Order order = GetOrderByLicenseNumber(i_LicenseNumber);
 
-        public string GetOrderDataByLicenseNumber(string i_LicenseNumber)
-        {
-            if (m_Orders.ContainsKey(i_LicenseNumber))
+            if (order != null)
             {
-                return m_Orders[i_LicenseNumber].ToString();
+                order.Vehicle.AddEnergy(i_Ammount);
+                isSucceed = true;
             }
-            else
-            {
-                return null; //throw exception
-            }
+
+            return isSucceed;
         }
 
         public bool AddNewOrder(Order i_Order)
         {
             bool isSuccessful = false;
+
             if (!m_Orders.ContainsKey(i_Order.Vehicle.LicenseNumber))
             {
                 m_Orders.Add(i_Order.Vehicle.LicenseNumber, i_Order);
                 isSuccessful = true;
             }
+
             return isSuccessful;
         }
 

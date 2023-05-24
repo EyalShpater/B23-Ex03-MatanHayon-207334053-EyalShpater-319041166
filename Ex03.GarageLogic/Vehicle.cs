@@ -83,7 +83,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Cannot charge a fuel engine!");
             }
         }
 
@@ -95,7 +95,7 @@ namespace Ex03.GarageLogic
             }
             else 
             { 
-                throw new ArgumentException(); 
+                throw new ArgumentException("Cannot add fuel to an electric engine!");
             }
         }
 
