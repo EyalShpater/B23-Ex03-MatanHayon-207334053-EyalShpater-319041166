@@ -212,11 +212,7 @@ Changed Status to In-Repair");
             while (!isValidInput)
             {
                 Console.WriteLine("Choose a status:");
-                for (int i = 0; i < Enum.GetNames(typeof(eStatus)).Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {Enum.GetName(typeof(eStatus), i)}");
-                }
-
+                printOrderStatuses();
                 Console.WriteLine("Enter the corresponding number: ");
                 if (!int.TryParse(Console.ReadLine(), out userInput) || userInput < 1 || userInput > Enum.GetNames(typeof(eStatus)).Length)
                 {
@@ -232,6 +228,14 @@ Changed Status to In-Repair");
             DisplayVehiclesByStatus(status);
         }
 
+
+        private static void printOrderStatuses()
+        {
+            for (int i = 0; i < Enum.GetNames(typeof(eStatus)).Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Enum.GetName(typeof(eStatus), i)}");
+            }
+        }
 
         private void DisplayVehiclesByStatus(eStatus status)
         {
@@ -262,9 +266,32 @@ Changed Status to In-Repair");
             string licenseNumber = askLicenseNumberFromUser();
             Order order = m_Garage.GetOrderByLicenseNumber(licenseNumber);
 
-            order.Status = 
+            while (order == null)
+            {
+                Console.WriteLine("Couldn't find this license number! Please try again.");
+                licenseNumber = askLicenseNumberFromUser();
+            }
 
+            order.Status = getNewStatusFromUser();
         }
+
+        private eStatus getNewStatusFromUser()
+        {
+            string input;
+            int res;
+
+            Console.WriteLine("Choose a new status:");
+            printOrderStatuses();
+            input = Console.ReadLine();
+            while (!int.TryParse(input, out res))
+            { 
+                Console.WriteLine("Invalid Input! Try Again!");
+                input = Console.ReadLine();
+            }
+
+            return (eStatus)res;
+        }
+
 
         private void AddAirToWheels()
         {
@@ -273,7 +300,7 @@ Changed Status to In-Repair");
             Console.WriteLine("Add air to wheels:");
             Console.WriteLine("Enter wanted PSI units to add:");
             string wantedPsiUnits = Console.ReadLine();
-            m_Garage.
+            //m_Garage.
         }
 
         private void AddFuel()
