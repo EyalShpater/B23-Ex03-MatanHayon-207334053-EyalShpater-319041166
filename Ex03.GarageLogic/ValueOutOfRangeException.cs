@@ -10,7 +10,6 @@ namespace Ex03.GarageLogic
         public ValueOutOfRangeException(float? i_MaxValue, float? i_MinValue)
             : this(i_MaxValue, i_MinValue, string.Empty)
         {
-
         }
 
         public ValueOutOfRangeException(float? i_MaxValue, float? i_MinValue, string i_Message)

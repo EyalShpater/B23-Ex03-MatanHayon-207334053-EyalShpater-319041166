@@ -333,7 +333,6 @@ Enter a number to choose an option:
             printLineOfSameChars(k_TitlesChar,  i_FunctionName.Length);
             Console.WriteLine(i_FunctionName);
             printLineOfSameChars(k_TitlesChar, i_FunctionName.Length);
-
         }
 
         private static void printLineOfSameChars(string i_WantedChar, int i_NumOfPrintsInLine)
@@ -342,6 +341,7 @@ Enter a number to choose an option:
             {
                 Console.Write(i_WantedChar);
             }
+
             Console.WriteLine();
         }
 

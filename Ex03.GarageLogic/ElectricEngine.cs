@@ -4,7 +4,6 @@
     {
         internal ElectricEngine(float i_MaxEngineCapacity) : base(i_MaxEngineCapacity) 
         { 
-
         }
 
         internal void Charge(float i_EnergyToAddInMinutes)
