@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -12,18 +10,6 @@ namespace Ex03.GarageLogic
         public Garage()
         {
             m_Orders = new Dictionary<string, Order>();
-        }
-
-        public Order GetOrderByLicenseNumber(string i_LicenseNumber)
-        {
-            Order order = null;
-
-            if (m_Orders.ContainsKey(i_LicenseNumber))
-            {
-                order = m_Orders[i_LicenseNumber];
-            }
-
-            return order;
         }
 
         public void SetNewVehicleAttributes(string i_LicenseNumber, string[] i_UniquqAttributes, string[] i_GeneralAttributes)
@@ -121,6 +107,18 @@ namespace Ex03.GarageLogic
         public string[] GetVehiclesTypes()
         {
             return VehicleFactory.GetVehiclesTypes();
+        }
+
+        public Order GetOrderByLicenseNumber(string i_LicenseNumber)
+        {
+            Order order = null;
+
+            if (m_Orders.ContainsKey(i_LicenseNumber))
+            {
+                order = m_Orders[i_LicenseNumber];
+            }
+
+            return order;
         }
 
         public bool IsEmpty()

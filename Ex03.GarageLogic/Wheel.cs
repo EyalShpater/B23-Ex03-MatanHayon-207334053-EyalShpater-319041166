@@ -5,13 +5,21 @@ namespace Ex03.GarageLogic
     {
         private string m_ManufacturerName;
         private float m_CurrentAirPressure;
-        private float m_MaxAirPressure;
+        private readonly float r_MaxAirPressure;
 
         internal Wheel(float i_MaxAirPressure)
         {
+            if (i_MaxAirPressure > 0)
+            {
+                r_MaxAirPressure = i_MaxAirPressure;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(null, 0);
+            }
+
             m_ManufacturerName = null;
             m_CurrentAirPressure = 0;
-            MaxAirPressure = i_MaxAirPressure;
         }
 
         public override string ToString()
@@ -21,7 +29,7 @@ namespace Ex03.GarageLogic
 Manufacturer Name: {0}
 Current Air Pressure: {1}
 Max Air Pressure: {2}
-", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
+", m_ManufacturerName, m_CurrentAirPressure, r_MaxAirPressure);
         }
 
         internal float CurrentAirPressure
@@ -32,13 +40,13 @@ Max Air Pressure: {2}
             }
             private set
             {
-                if (value <= m_MaxAirPressure && value >= 0)
+                if (value <= r_MaxAirPressure && value >= 0)
                 {
                     m_CurrentAirPressure = value;
                 }
                 else
                 {
-                    ValueOutOfRangeException ex = new ValueOutOfRangeException(m_MaxAirPressure, 0);
+                    ValueOutOfRangeException ex = new ValueOutOfRangeException(r_MaxAirPressure, 0);
                 }
             }
         }
@@ -47,19 +55,7 @@ Max Air Pressure: {2}
         {
             get
             {
-                return m_MaxAirPressure;
-            }
-
-            set
-            {
-                if (value > 0)
-                {
-                    m_MaxAirPressure = value;
-                }
-                else
-                {
-                    throw new ValueOutOfRangeException(null, 0);
-                }
+                return r_MaxAirPressure;
             }
         }
 
@@ -87,13 +83,13 @@ Max Air Pressure: {2}
         {
             float newAirPressure = i_AirToAdd + m_CurrentAirPressure;
 
-            if (newAirPressure <= m_MaxAirPressure && newAirPressure >= 0)
+            if (newAirPressure <= r_MaxAirPressure && newAirPressure >= 0)
             {
                 m_CurrentAirPressure = newAirPressure;
             }
             else
             {
-                throw new ValueOutOfRangeException(m_MaxAirPressure, 0);
+                throw new ValueOutOfRangeException(r_MaxAirPressure, 0);
             }
         }
 
@@ -102,6 +98,5 @@ Max Air Pressure: {2}
             ManufacturerName = i_ManufacturerName;
             m_CurrentAirPressure = float.Parse(i_CurrentAirPressure);
         }
-
     }
 }

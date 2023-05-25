@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -28,7 +27,7 @@ namespace Ex03.GarageLogic
                 return m_LicenseNumber;
             }
 
-            internal set
+            private set
             {
                 if (value.Length > 0)
                 {

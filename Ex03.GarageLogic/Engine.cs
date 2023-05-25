@@ -3,11 +3,19 @@
     public abstract class Engine
     {
         protected float m_CurrentEnergyLevel;
-        protected float m_MaxCapacity;
+        protected readonly float r_MaxCapacity;
 
         protected Engine(float i_MaxCapacity)
         {
-            m_MaxCapacity = i_MaxCapacity;
+            if (i_MaxCapacity > 0)
+            {
+                r_MaxCapacity = i_MaxCapacity;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(null, 0);
+            }
+            
             m_CurrentEnergyLevel = 0;
         }
 
@@ -20,13 +28,13 @@
 
             internal set
             {
-                if (value <= m_MaxCapacity  && value >= 0)
+                if (value <= r_MaxCapacity  && value >= 0)
                 {
                     m_CurrentEnergyLevel = value;
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(m_MaxCapacity, 0, "Engine: ");
+                    throw new ValueOutOfRangeException(r_MaxCapacity, 0, "Engine: ");
                 }
             }
         }
@@ -35,26 +43,14 @@
         {
             get
             {
-                return m_MaxCapacity;
-            }
-
-            internal set
-            {
-                if (value > 0)
-                {
-                    m_MaxCapacity = value;
-                }
-                else
-                {
-                    throw new ValueOutOfRangeException(null, 0);
-                } 
+                return r_MaxCapacity;
             }
         }
 
         public override string ToString()
         {
             return string.Format(@"Current Energy Level: {0}
-Max Capacity: {1}", m_CurrentEnergyLevel, m_MaxCapacity);
+Max Capacity: {1}", m_CurrentEnergyLevel, r_MaxCapacity);
         }
 
         protected void AddEnergy(float i_EnergyToAdd)
