@@ -62,6 +62,7 @@ namespace Ex03.GarageLogic
             { 
                 return m_Model; 
             }
+
             private set
             {
                 if (value.Length >= 1)
@@ -165,19 +166,6 @@ Energy Level: {2:p}
             }
         }
 
-        private void updateEnergyPercentage()
-        {
-            m_EnergyLevel = m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity;
-        }
-
-        private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)
-        {
-            foreach(Wheel wheel in m_Wheels)
-            {
-                wheel.SetAttributes(i_Manufactorer, i_AirPressure);
-            }
-        }
-
         protected List<Wheel> CreateWheelsList(int i_NumOfWheels, float i_MaxAirPressure)
         {
             List<Wheel> wheels = new List<Wheel>(i_NumOfWheels);
@@ -188,6 +176,19 @@ Energy Level: {2:p}
             }
 
             return wheels;
+        }
+
+        private void updateEnergyPercentage()
+        {
+            m_EnergyLevel = m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity;
+        }
+
+        private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)
+        {
+            foreach (Wheel wheel in m_Wheels)
+            {
+                wheel.SetAttributes(i_Manufactorer, i_AirPressure);
+            }
         }
     }
 }

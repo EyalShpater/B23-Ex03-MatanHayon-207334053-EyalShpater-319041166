@@ -7,11 +7,21 @@ namespace Ex03.GarageLogic
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
 
-        public Wheel(float i_MaxAirPressure)
+        internal Wheel(float i_MaxAirPressure)
         {
             m_ManufacturerName = null;
             m_CurrentAirPressure = 0;
             MaxAirPressure = i_MaxAirPressure;
+        }
+
+        public override string ToString()
+        {
+            return string.Format(@"Wheel
+=====
+Manufacturer Name: {0}
+Current Air Pressure: {1}
+Max Air Pressure: {2}
+", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
         }
 
         internal float CurrentAirPressure
@@ -93,14 +103,5 @@ namespace Ex03.GarageLogic
             m_CurrentAirPressure = float.Parse(i_CurrentAirPressure);
         }
 
-        public override string ToString()
-        {
-            return string.Format(@"Wheel
-=====
-Manufacturer Name: {0}
-Current Air Pressure: {1}
-Max Air Pressure: {2}
-", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
-        }
     }
 }

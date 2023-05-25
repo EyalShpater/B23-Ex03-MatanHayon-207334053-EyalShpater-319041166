@@ -104,8 +104,6 @@ namespace Ex03.GarageLogic
 Customer Name: {0}
 Phone Number: {1}
 Status: {2}
-Vehicle Details:
-
 {3}", m_CustomerName, m_PhoneNumber, m_Status.ToString(), Vehicle.ToString());
         }
 

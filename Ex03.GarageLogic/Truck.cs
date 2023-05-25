@@ -6,10 +6,10 @@ namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
-        private const int k_NumOfWheels = 14;
-        private const float k_MaxWheelAirPressure = 26f;
         internal const float k_MaxFuelTank = 135f;
         internal const eFuelType k_eFuelType = eFuelType.Soler;
+        private const int k_NumOfWheels = 14;
+        private const float k_MaxWheelAirPressure = 26f;
         private const int k_NumOfChangeableAttributes = 2;
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;
-            base.m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
+            m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
         }
 
         public bool IsDangerousMaterials
@@ -59,6 +59,16 @@ namespace Ex03.GarageLogic
             return new string[] { "Is Containing Dangerous Materials", "Cargo Volume" };
         }
 
+        public override string ToString()
+        {
+            return string.Format(@"Truck
+=====
+{0}
+{1} dangerous materials.
+Cargo Volume: {2}
+", base.ToString(), m_IsDangerousMaterials ? "Has" : "Doesn't has", m_CargoVolume);
+        }
+
         internal override void SetUniqueAttributes(string[] i_Attributes)
         {
             bool isDangerousValidAnswer = i_Attributes[0].ToLower() == "yes" || i_Attributes[0].ToLower() == "no";
@@ -73,16 +83,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException();
             }
-        }
-
-        public override string ToString()
-        {
-            return string.Format(@"Truck
-=====
-{0}
-{1} dangerous materials.
-Cargo Volume: {2}
-", base.ToString(), m_IsDangerousMaterials ? "Has" : "Doesn't has", m_CargoVolume);
         }
     }
 }

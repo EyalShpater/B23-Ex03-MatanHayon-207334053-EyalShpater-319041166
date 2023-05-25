@@ -10,6 +10,7 @@ namespace Ex03.GarageLogic
 
             return types;
         }
+
         public static Vehicle CreateVehicle(int i_Type, string i_LicenseNumber)
         {
             Vehicle vehicle = null;
@@ -43,6 +44,5 @@ namespace Ex03.GarageLogic
 
             return vehicle;
         }
-
     }
 }

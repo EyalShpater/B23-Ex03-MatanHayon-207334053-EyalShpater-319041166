@@ -2,11 +2,14 @@
 {
     internal class ElectricEngine : Engine
     {
-        internal ElectricEngine(float i_MaxEngineCapacity) : base(i_MaxEngineCapacity) { }
+        internal ElectricEngine(float i_MaxEngineCapacity) : base(i_MaxEngineCapacity) 
+        { 
+
+        }
 
         internal void Charge(float i_EnergyToAdd)
         {
-            base.AddEnergy(i_EnergyToAdd);
+            AddEnergy(i_EnergyToAdd);
         }
 
         public override string ToString()

@@ -82,7 +82,7 @@ namespace Ex03.GarageLogic
         {
             Order order = GetOrderByLicenseNumber(i_LicenseNumber);
 
-            if(order!=null)
+            if (order != null)
             {
                 order.Vehicle.AddEnergy(i_Ammount, i_FuelType);
             }
@@ -127,6 +127,5 @@ namespace Ex03.GarageLogic
         {
             return m_Orders.Count == 0;
         }
-
     }
 }

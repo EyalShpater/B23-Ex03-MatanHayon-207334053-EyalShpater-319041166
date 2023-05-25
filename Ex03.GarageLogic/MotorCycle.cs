@@ -7,12 +7,11 @@ namespace Ex03.GarageLogic
 {
     public class MotorCycle : Vehicle
     {
-        //Regular Motorcycle consts:
-        private const int k_NumOfWheels = 2;
-        private const float k_MaxWheelAirPressure = 31;
         internal const eFuelType k_FuelType = eFuelType.Octan98;
         internal const float k_MaxFuelTank = 6.4f;
         internal const float k_MaxBatterySize = 2.6f;
+        private const int k_NumOfWheels = 2;
+        private const float k_MaxWheelAirPressure = 31;
         private const int k_NumOfAttributes = 2;
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
@@ -21,7 +20,7 @@ namespace Ex03.GarageLogic
         {
             m_LicenseType = 0;
             m_EngineVolume = 0;
-            base.m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
+            m_Wheels = CreateWheelsList(k_NumOfWheels, k_MaxWheelAirPressure);
         }
 
         public eLicenseType LicenseType
@@ -62,6 +61,15 @@ namespace Ex03.GarageLogic
             return new string[] { "LicensesType", "EngineVolume" };
         }
 
+        public override string ToString()
+        {
+            return string.Format(@"Motorcycle:
+==========
+{0}
+License Type: {1}
+Engine Volume: {2}", base.ToString(), LicenseType, EngineVolume);
+        }
+
         internal override void SetUniqueAttributes(string[] i_Attributes)
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
@@ -74,16 +82,6 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException();
             }
-        }
-
-        public override string ToString()
-        {
-            return string.Format(@"Motorcycle:
-==========
-{0}
-License Type: {1}
-Engine Volume: {2}
-", base.ToString(), LicenseType, EngineVolume);
         }
     }
 }

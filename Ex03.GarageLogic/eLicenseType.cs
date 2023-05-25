@@ -12,5 +12,4 @@ namespace Ex03.GarageLogic
         AA,
         B1
     }
-
 }

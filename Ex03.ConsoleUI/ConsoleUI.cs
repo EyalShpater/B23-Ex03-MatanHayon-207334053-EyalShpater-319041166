@@ -64,7 +64,6 @@ namespace Ex03.ConsoleUI
             }
         }
 
-
         /******* menu Functions ********/
 
         private void addVehicle()
@@ -85,8 +84,7 @@ namespace Ex03.ConsoleUI
 Changed Status to In-Repair");
                     m_Garage.ChangeVehicleStatus(licenseNumber, eOrderStatus.InRepair);
                 }
-            }
-                
+            }  
             catch(Exception i_Exception)
             {
                 Console.WriteLine(i_Exception.Message);
@@ -108,7 +106,7 @@ Changed Status to In-Repair");
                     if (int.TryParse(input, out userInput) && Enum.IsDefined(typeof(eOrderStatus), userInput))
                     {
                         isValidInput = true;
-                        eOrderStatus status = (eOrderStatus)(userInput);
+                        eOrderStatus status = (eOrderStatus)userInput;
                         displayVehiclesByStatus(status);
                     }
                     else
@@ -117,7 +115,6 @@ Changed Status to In-Repair");
                     }
                 }
             }
-
             catch (Exception i_Exception)
             {
                 Console.WriteLine(i_Exception.Message);
@@ -142,14 +139,12 @@ Changed Status to In-Repair");
 
                         m_Garage.ChangeVehicleStatus(licenseNumber, orderStatus);   
                     }
-
                     catch (ArgumentException i_Exception)
                     {
                         Console.WriteLine(i_Exception.Message);
                     }
                 }
             }
-
             catch (Exception i_Exception)
             {
                 Console.WriteLine(i_Exception.Message);

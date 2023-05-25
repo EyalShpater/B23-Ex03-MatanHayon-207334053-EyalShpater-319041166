@@ -51,16 +51,15 @@
             }
         }
 
-        protected void AddEnergy(float i_EnergyToAdd)
-        {
-            CurrentEnergyLevel += i_EnergyToAdd;
-        }
-
         public override string ToString()
         {
             return string.Format(@"Current Energy Level: {0}
-Max Capacity: {1}",
-                m_CurrentEnergyLevel, m_MaxCapacity);
+Max Capacity: {1}", m_CurrentEnergyLevel, m_MaxCapacity);
+        }
+
+        protected void AddEnergy(float i_EnergyToAdd)
+        {
+            CurrentEnergyLevel += i_EnergyToAdd;
         }
     }
 }
