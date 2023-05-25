@@ -36,9 +36,9 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"Fuel Engine
 ============
-
 Fuel Type: {0}
-{1}", r_FuelType.ToString(), base.ToString());
+{1}
+", r_FuelType.ToString(), base.ToString());
         }
     }
 }

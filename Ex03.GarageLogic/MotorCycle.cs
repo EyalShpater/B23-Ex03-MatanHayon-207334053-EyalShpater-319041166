@@ -78,8 +78,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(
-@"Motorcycle:
+            return string.Format(@"Motorcycle:
+==========
 {0}
 License Type: {1}
 Engine Volume: {2}

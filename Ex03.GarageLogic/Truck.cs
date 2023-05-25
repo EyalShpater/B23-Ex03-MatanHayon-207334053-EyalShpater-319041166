@@ -23,25 +23,25 @@ namespace Ex03.GarageLogic
 
         public bool IsDangerousMaterials
         {
-            get 
-            { 
-                return m_IsDangerousMaterials; 
+            get
+            {
+                return m_IsDangerousMaterials;
             }
 
-            internal set 
-            { 
-                m_IsDangerousMaterials = value; 
+            internal set
+            {
+                m_IsDangerousMaterials = value;
             }
         }
 
         public float CargoVolume
         {
-            get 
-            { 
-                return m_CargoVolume; 
+            get
+            {
+                return m_CargoVolume;
             }
 
-            internal set 
+            internal set
             {
                 if (value >= 0)
                 {
@@ -76,16 +76,13 @@ namespace Ex03.GarageLogic
         }
 
         public override string ToString()
-        { 
-           StringBuilder res = new StringBuilder();
-
-            res.AppendLine(base.ToString());
-            res.AppendLine(string.Format(
-@"{0} Dangerous materials.
-Cargo Voulme: {1}",
-                m_IsDangerousMaterials ? "Has" : "Doesn't has", m_CargoVolume));
-         
-            return res.ToString();
+        {
+            return string.Format(@"Truck
+=====
+{0}
+{1} dangerous materials.
+Cargo Volume: {2}
+", base.ToString(), m_IsDangerousMaterials ? "Has" : "Doesn't has", m_CargoVolume);
         }
     }
 }

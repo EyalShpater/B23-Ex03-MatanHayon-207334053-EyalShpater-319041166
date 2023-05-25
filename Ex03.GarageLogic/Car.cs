@@ -79,14 +79,12 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("Vehicle Type: Car");
-            sb.AppendLine(base.ToString()); 
-            sb.AppendFormat("Color: {0}", Color);
-            sb.AppendFormat("Number of Doors: {0}", NumOfDoors);
-
-            return sb.ToString();
+            return string.Format(@"Car
+===
+{0}
+Color: {1}
+Number of doors: {2}
+", base.ToString(), Color, NumOfDoors);
         }
     }
 }

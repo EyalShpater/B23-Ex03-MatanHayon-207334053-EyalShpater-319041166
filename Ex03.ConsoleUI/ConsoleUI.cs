@@ -64,6 +64,7 @@ namespace Ex03.ConsoleUI
             }
         }
 
+
         /******* menu Functions ********/
 
         private void addVehicle()
@@ -85,11 +86,11 @@ Changed Status to In-Repair");
                     m_Garage.ChangeVehicleStatus(licenseNumber, eOrderStatus.InRepair);
                 }
             }
+                
             catch(Exception i_Exception)
             {
                 Console.WriteLine(i_Exception.Message);
             }
-            
         }
         
         private void showVehiclesByStatusMenu()
@@ -354,7 +355,6 @@ Enter a number to choose an option:
         private void getOrderDataFromUser(string i_LicenseNumber)
         {
             bool isValid = false;
-            Order order;
 
             getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle, i_LicenseNumber);
             m_Garage.AddNewOrder(new Order(vehicle, customername, phoneNumber));
@@ -529,7 +529,5 @@ Enter a number to choose an option:
         {
             return i_Value <= i_Max && i_Value >= i_Min;
         }
-
-
     }
 }

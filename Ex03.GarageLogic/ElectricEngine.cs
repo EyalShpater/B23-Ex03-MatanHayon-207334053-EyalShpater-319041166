@@ -13,8 +13,8 @@
         {
             return string.Format(@"Electric Engine: 
 ===============
-
-{0}", base.ToString());
+{0}
+", base.ToString());
         }
     }
 }

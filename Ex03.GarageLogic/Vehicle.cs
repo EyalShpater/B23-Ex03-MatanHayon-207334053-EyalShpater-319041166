@@ -21,7 +21,6 @@ namespace Ex03.GarageLogic
             m_Wheels = null;
         }
 
-
         public string LicenseNumber
         {
             get
@@ -76,6 +75,46 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public abstract string[] GetUniqueAttributes();
+
+        public string[] GetGeneralAttributes()
+        {
+            return new string[] { "Current Energy Amount", "Wheels Manufactorer", "Current Wheels Air Pressure", "Vehicle Model" };
+        }
+
+        public bool IsElectric()
+        {
+            return m_Engine is ElectricEngine;
+        }
+
+        public override string ToString()
+        {
+            return string.Format(@"Model: {0}
+License Number: {1}
+Energy Level: {2:p}
+
+{3}
+
+{4}", m_Model, m_LicenseNumber, m_EnergyLevel, m_Engine.ToString(), m_Wheels[0].ToString());
+        }
+
+        public override int GetHashCode()
+        {
+            return m_LicenseNumber.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool isEqual = false;
+
+            if (obj is Vehicle vehicle)
+            {
+                isEqual = vehicle.GetHashCode() == this.GetHashCode();
+            }
+
+            return isEqual;
+        }
+
         internal void AddEnergy(float i_EnergyToAdd)
         {
             if (m_Engine is ElectricEngine engine)
@@ -108,40 +147,14 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public abstract string[] GetUniqueAttributes();
-
         internal abstract void SetUniqueAttributes(string[] i_Features);
 
-        private void updateEnergyPercentage()
+        internal void SetGeneralAttributes(params string[] i_Attributes)
         {
-            m_EnergyLevel = (m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity) * 100;
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendFormat(@"Model: {0}
-License Number: {1}
-Energy Level: {2}%
-
-Engine:
-=======
-{3}
-
-All Wheels:
-===========
-{4}
-", m_Model, m_LicenseNumber, m_EnergyLevel, m_Engine.ToString(), m_Wheels[0].ToString());
-
-            int wheelNumber = 0;
-            foreach (Wheel wheel in m_Wheels)
-            {
-                wheelNumber++;
-                sb.AppendFormat("Wheel number: {0}{1}{2}", wheelNumber, Environment.NewLine, wheel.ToString());
-            }
-
-            return sb.ToString();
+            m_Engine.CurrentEnergyLevel = float.Parse(i_Attributes[0]);
+            updateEnergyPercentage();
+            setAllWheelsAttributes(i_Attributes[1], i_Attributes[2]);
+            Model = i_Attributes[3];
         }
 
         protected void ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(int i_Expected, int i_Actual)
@@ -152,17 +165,9 @@ All Wheels:
             }
         }
 
-        public string[] GetGeneralAttributes()
+        private void updateEnergyPercentage()
         {
-            return new string[] { "Current Energy Amount", "Wheels Manufactorer", "Current Wheels Air Pressure", "Vehicle Model" };
-        }
-
-        internal void SetGeneralAttributes(params string[] i_Attributes)
-        {
-            m_Engine.CurrentEnergyLevel = float.Parse(i_Attributes[0]);
-            updateEnergyPercentage();
-            setAllWheelsAttributes(i_Attributes[1], i_Attributes[2]);
-            Model = i_Attributes[3];
+            m_EnergyLevel = m_Engine.CurrentEnergyLevel / m_Engine.MaxCapacity;
         }
 
         private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)
@@ -183,28 +188,6 @@ All Wheels:
             }
 
             return wheels;
-        }
-
-        public bool IsElectric()
-        {
-            return m_Engine is ElectricEngine;
-        }
-
-        public override int GetHashCode()
-        {
-            return m_LicenseNumber.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            bool isEqual = false;
-
-            if (obj is Vehicle vehicle)
-            {
-                isEqual = vehicle.GetHashCode() == this.GetHashCode();
-            }
-
-            return isEqual;
         }
     }
 }

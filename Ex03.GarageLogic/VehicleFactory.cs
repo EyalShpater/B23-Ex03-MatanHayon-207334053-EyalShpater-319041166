@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+
+namespace Ex03.GarageLogic
 {
     public static class VehicleFactory
     {
@@ -36,8 +38,7 @@
                     vehicle = new Truck(engine, i_LicenseNumber);
                     break;
                 default:
-                    /// throw exception
-                    break;
+                    throw new ArgumentException("Invalid value!");
             }
 
             return vehicle;
