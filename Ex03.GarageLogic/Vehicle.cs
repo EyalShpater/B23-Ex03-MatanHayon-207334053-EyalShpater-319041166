@@ -159,11 +159,10 @@ All Wheels:
 
         internal void SetGeneralAttributes(params string[] i_Attributes)
         {
-            LicenseNumber = i_Attributes[0];
-            m_Engine.CurrentEnergyLevel = float.Parse(i_Attributes[1]);
+            m_Engine.CurrentEnergyLevel = float.Parse(i_Attributes[0]);
             updateEnergyPercentage();
-            setAllWheelsAttributes(i_Attributes[2], i_Attributes[3]);
-            Model = i_Attributes[4];
+            setAllWheelsAttributes(i_Attributes[1], i_Attributes[2]);
+            Model = i_Attributes[3];
         }
 
         private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)

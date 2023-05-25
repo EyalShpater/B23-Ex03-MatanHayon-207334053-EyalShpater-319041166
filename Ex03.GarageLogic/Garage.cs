@@ -28,14 +28,14 @@ namespace Ex03.GarageLogic
 
         public void SetNewVehicleAttributes(string i_LicenseNumber, string[] i_UniquqAttributes, string[] i_GeneralAttributes)
         {
-            if (!m_Orders.ContainsKey(i_LicenseNumber))
+            if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 m_Orders[i_LicenseNumber].Vehicle.SetGeneralAttributes(i_GeneralAttributes);
                 m_Orders[i_LicenseNumber].Vehicle.SetUniqueAttributes(i_UniquqAttributes);
             }
             else
             {
-                throw new ArgumentException("Vehicle is already exist");
+                throw new ArgumentException("Vehicle is not found!");
             }
         }
 
@@ -106,17 +106,21 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public bool AddNewOrder(Order i_Order)
+        public void AddNewOrder(Order i_Order)
         {
-            bool isSuccessful = false;
-
             if (!m_Orders.ContainsKey(i_Order.Vehicle.LicenseNumber))
             {
                 m_Orders.Add(i_Order.Vehicle.LicenseNumber, i_Order);
-                isSuccessful = true;
             }
+            else
+            {
+                throw new ArgumentException("Vehicle is already exist");
+            }
+        }
 
-            return isSuccessful;
+        public string[] GetVehiclesTypes()
+        {
+            return VehicleFactory.GetVehiclesTypes();
         }
 
         public bool IsEmpty()

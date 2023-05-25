@@ -76,7 +76,7 @@ namespace Ex03.ConsoleUI
 
                 if (order == k_NotFound)
                 {
-                    order = getOrderDataFromUser(licenseNumber);
+                    getOrderDataFromUser(licenseNumber);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ Enter a number to choose an option:
 
         private void printVehiclesTypes()
         {
-            string[] vehiclesTypes = VehicleFactory.GetVehiclesTypes();
+            string[] vehiclesTypes = m_Garage.GetVehiclesTypes();
 
             for (int i = 0; i < vehiclesTypes.Length; i++)
             {
@@ -351,13 +351,13 @@ Enter a number to choose an option:
 
         /******* Utility "Get Data From User" Functions ********/
 
-        private Order getOrderDataFromUser(string i_LicenseNumber)
+        private void getOrderDataFromUser(string i_LicenseNumber)
         {
             bool isValid = false;
             Order order;
 
             getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle, i_LicenseNumber);
-            order = new Order(vehicle, customername, phoneNumber);
+            m_Garage.AddNewOrder(new Order(vehicle, customername, phoneNumber));
             while (!isValid)
             {
                 try
@@ -374,10 +374,6 @@ Enter a number to choose an option:
                     Console.WriteLine(i_Exception.Message);
                 }
             }
-
-            m_Garage.AddNewOrder(order);
-
-            return order;
         }
 
         private void getCustomerDetails(out string o_Name, out string o_PhoneNumber, out Vehicle o_Vehicle, string i_LicenseNumber)
