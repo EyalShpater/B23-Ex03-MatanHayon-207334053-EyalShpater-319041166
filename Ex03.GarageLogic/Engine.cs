@@ -18,7 +18,7 @@
                 return m_CurrentEnergyLevel; 
             }
 
-            set
+            internal set
             {
                 if (value <= m_MaxCapacity  && value >= 0)
                 {
@@ -38,7 +38,7 @@
                 return m_MaxCapacity;
             }
 
-            set
+            internal set
             {
                 if (value > 0)
                 {

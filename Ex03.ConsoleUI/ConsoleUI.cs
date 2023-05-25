@@ -11,8 +11,8 @@ namespace Ex03.ConsoleUI
         private const int k_InvalidCohice = -1;
         private const object k_NotFound = null;
         private const string k_EmptyGarageMessege = "There are no vehicles in the garage!";
-        private Garage m_Garage;
         private const string k_TitlesChar = "-";
+        private Garage m_Garage;
 
         /******* User Functions ********/
 
@@ -82,7 +82,7 @@ namespace Ex03.ConsoleUI
                 {
                     Console.WriteLine(@"Vehicle already in Garage.
 Changed Status to In-Repair");
-                    order.Status = eOrderStatus.InRepair;
+                    m_Garage.ChangeVehicleStatus(licenseNumber, eOrderStatus.InRepair);
                 }
             }
             catch(Exception i_Exception)
@@ -134,15 +134,17 @@ Changed Status to In-Repair");
                 }
                 else
                 {
-                    Order order = getOrderFromUserByLicenseNumber();
+                    try
+                    {
+                        string licenseNumber = getLicenseNumberFromUser();
+                        eOrderStatus orderStatus = getNewOrderStatusFromUser();
 
-                    if (order != null)
-                    {
-                        order.Status = getNewOrderStatusFromUser();
+                        m_Garage.ChangeVehicleStatus(licenseNumber, orderStatus);   
                     }
-                    else
+
+                    catch (ArgumentException i_Exception)
                     {
-                        Console.WriteLine("Couldn't find the vehicle!");
+                        Console.WriteLine(i_Exception.Message);
                     }
                 }
             }
@@ -354,14 +356,16 @@ Enter a number to choose an option:
             bool isValid = false;
             Order order;
 
-            getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle);
+            getCustomerDetails(out string customername, out string phoneNumber, out Vehicle vehicle, i_LicenseNumber);
             order = new Order(vehicle, customername, phoneNumber);
             while (!isValid)
             {
                 try
                 {
-                    getAndSetGeneralDataForVehicleFromUser(vehicle, i_LicenseNumber);
-                    getAndSetUniqueDataForVehicleFromUser(vehicle);
+                    string[] generalAttributes = getDataForVehicleFromUser(vehicle.GetGeneralAttributes());
+                    string[] uniqueAttributes = getDataForVehicleFromUser(vehicle.GetUniqueAttributes());
+
+                    m_Garage.SetNewVehicleAttributes(i_LicenseNumber, uniqueAttributes, generalAttributes);
                     isValid = true;
                 }
 
@@ -376,52 +380,36 @@ Enter a number to choose an option:
             return order;
         }
 
-        private void getCustomerDetails(out string o_Name, out string o_PhoneNumber, out Vehicle o_Vehicle)
+        private void getCustomerDetails(out string o_Name, out string o_PhoneNumber, out Vehicle o_Vehicle, string i_LicenseNumber)
         {
             Console.WriteLine("Enter customer name:");
             o_Name = Console.ReadLine();
             Console.WriteLine("Enter phone number (10 digits):");
             o_PhoneNumber = Console.ReadLine();
-            o_Vehicle = getVehicleFromUser();
+            o_Vehicle = getVehicleFromUser(i_LicenseNumber);
         }
 
-        private Vehicle getVehicleFromUser()
+        private Vehicle getVehicleFromUser(string i_LicenseNumber)
         {
             int selectedVehicleType = getVehicleTypeChoiceFromUser();
 
-            return VehicleFactory.CreateVehicle(selectedVehicleType);
+            return VehicleFactory.CreateVehicle(selectedVehicleType, i_LicenseNumber);
         }
 
-        private static void getAndSetUniqueDataForVehicleFromUser(Vehicle io_Vehicle)
+        private static string[] getDataForVehicleFromUser(string[] i_Attributes)
         {
-            string[] uniqueAttributes = io_Vehicle.GetUniqueAttributes();
-            string[] dataInputFromUser = new string[uniqueAttributes.Length];
+            string[] dataInputFromUser = new string[i_Attributes.Length];
 
             Console.WriteLine("Enter Data for the next Attributes:");
             Console.WriteLine("===================================");
 
-            for (int index = 0; index < uniqueAttributes.Length; index++)
+            for (int index = 0; index < i_Attributes.Length; index++)
             {
-                Console.WriteLine(uniqueAttributes[index] + ":");
+                Console.WriteLine(i_Attributes[index] + ":");
                 dataInputFromUser[index] = Console.ReadLine();
             }
 
-            io_Vehicle.SetUniqueAttributes(dataInputFromUser);
-        }
-
-        private static void getAndSetGeneralDataForVehicleFromUser(Vehicle o_Vehicle, string i_LicenseNumber)
-        {
-            Console.WriteLine("Enter current energy ammount:");
-            string currentEnergyAmmount = Console.ReadLine();
-            Console.WriteLine("Enter wheels manufactorer:");
-            string wheelsManufatorer = Console.ReadLine();
-            Console.WriteLine("Enter wheels air pressure");
-            string wheelsAirPressure = Console.ReadLine();
-            Console.WriteLine("Enter vehicle model:");
-            string carModel = Console.ReadLine();
-
-            o_Vehicle.SetGeneralAttributes(i_LicenseNumber, currentEnergyAmmount,
-                wheelsManufatorer, wheelsAirPressure, carModel);
+            return dataInputFromUser;
         }
 
         private int getVehicleTypeChoiceFromUser()
@@ -463,8 +451,12 @@ Enter a number to choose an option:
 
         private static string getLicenseNumberFromUser()
         {
+            string userInput;
+
             Console.WriteLine("Please enter license number:");
-            return Console.ReadLine();
+            userInput = Console.ReadLine();
+
+            return userInput;
         }
 
         private eOrderStatus getNewOrderStatusFromUser()
@@ -529,7 +521,7 @@ Enter a number to choose an option:
             return res;
         }
 
-        /******* Validators Functions ********/
+        /******* Validation Functions ********/
 
         private bool isValidVehicleTypeChoise(string i_Choice, ref int io_SelectedIndex, int i_NumOfTypes)
         {

@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
         private eColor m_Color;
         private int m_NumOfDoors;
 
-        public Car(Engine i_Engine) : base(i_Engine)
+        public Car(Engine i_Engine, string i_LicenseNumber) : base(i_Engine, i_LicenseNumber)
         {
             m_Color = eColor.White;
             m_NumOfDoors = 0;
@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
                 return m_Color; 
             }
 
-            set 
+            internal set 
             { 
                 m_Color = value; 
             }
@@ -44,7 +44,7 @@ namespace Ex03.GarageLogic
                 return m_NumOfDoors; 
             }
 
-            set 
+            internal set 
             {
                 if (value >= k_MinNumOfDoors && value <= k_MaxNumOfDoors)
                 {
@@ -62,7 +62,7 @@ namespace Ex03.GarageLogic
             return new string[] { "Color", "Number Of Doors" };
         }
 
-        public override void SetUniqueAttributes(string[] i_Attributes)
+        internal override void SetUniqueAttributes(string[] i_Attributes)
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
 

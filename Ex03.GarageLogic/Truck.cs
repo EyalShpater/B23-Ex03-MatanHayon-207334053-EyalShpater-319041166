@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         private bool m_IsDangerousMaterials;
         private float m_CargoVolume;
 
-        public Truck(Engine i_Engine) : base(i_Engine)
+        public Truck(Engine i_Engine, string i_LicenseNumber) : base(i_Engine, i_LicenseNumber)
         {
             m_IsDangerousMaterials = false;
             m_CargoVolume = 0;
@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
                 return m_IsDangerousMaterials; 
             }
 
-            set 
+            internal set 
             { 
                 m_IsDangerousMaterials = value; 
             }
@@ -41,7 +41,7 @@ namespace Ex03.GarageLogic
                 return m_CargoVolume; 
             }
 
-            set 
+            internal set 
             {
                 if (value >= 0)
                 {
@@ -59,7 +59,7 @@ namespace Ex03.GarageLogic
             return new string[] { "Is Containing Dangerous Materials", "Cargo Volume" };
         }
 
-        public override void SetUniqueAttributes(string[] i_Attributes)
+        internal override void SetUniqueAttributes(string[] i_Attributes)
         {
             bool isDangerousValidAnswer = i_Attributes[0].ToLower() == "yes" || i_Attributes[0].ToLower() == "no";
 

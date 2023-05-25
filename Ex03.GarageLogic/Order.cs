@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
                 return m_Vehicle; 
             }
 
-            set 
+            internal set 
             {
                 if (value != null)
                 {
@@ -44,7 +44,8 @@ namespace Ex03.GarageLogic
             { 
                 return m_CustomerName; 
             }
-            set 
+
+            internal set 
             {
                 if (!string.IsNullOrEmpty(value))
                 {
@@ -64,7 +65,7 @@ namespace Ex03.GarageLogic
                 return m_PhoneNumber; 
             }
 
-            set 
+            internal set 
             {
                 if (!string.IsNullOrEmpty(value) && int.TryParse(value, out int unusedDummyParameter))
                 {
@@ -91,7 +92,7 @@ namespace Ex03.GarageLogic
                 return m_Status; 
             }
 
-            set 
+            internal set 
             { 
                 m_Status = value; 
             }

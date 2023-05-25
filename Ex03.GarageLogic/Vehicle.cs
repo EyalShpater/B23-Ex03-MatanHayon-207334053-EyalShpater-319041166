@@ -12,11 +12,11 @@ namespace Ex03.GarageLogic
         protected List<Wheel> m_Wheels;
         protected Engine m_Engine;
 
-        public Vehicle(Engine i_Engine)
+        public Vehicle(Engine i_Engine, string i_LicenseNumber)
         {
             m_Engine = i_Engine;
             m_Model = null;
-            m_LicenseNumber = null;
+            m_LicenseNumber = i_LicenseNumber;
             m_EnergyLevel = 0;
             m_Wheels = null;
         }
@@ -28,7 +28,8 @@ namespace Ex03.GarageLogic
             {
                 return m_LicenseNumber;
             }
-            set
+
+            internal set
             {
                 if (value.Length > 0)
                 {
@@ -109,7 +110,7 @@ namespace Ex03.GarageLogic
 
         public abstract string[] GetUniqueAttributes();
 
-        public abstract void SetUniqueAttributes(string[] i_Features);
+        internal abstract void SetUniqueAttributes(string[] i_Features);
 
         private void updateEnergyPercentage()
         {
@@ -151,14 +152,18 @@ All Wheels:
             }
         }
 
-        public void SetGeneralAttributes(string i_LicenseNumber, string i_CurrentEnergyAmmount, 
-            string i_WheelsManufactorer, string i_WheelsAirPressure, string i_CarModel)
+        public string[] GetGeneralAttributes()
         {
-            LicenseNumber = i_LicenseNumber;
-            m_Engine.CurrentEnergyLevel = float.Parse(i_CurrentEnergyAmmount);
+            return new string[] { "Current Energy Amount", "Wheels Manufactorer", "Current Wheels Air Pressure", "Vehicle Model" };
+        }
+
+        internal void SetGeneralAttributes(params string[] i_Attributes)
+        {
+            LicenseNumber = i_Attributes[0];
+            m_Engine.CurrentEnergyLevel = float.Parse(i_Attributes[1]);
             updateEnergyPercentage();
-            Model = i_CarModel;
-            setAllWheelsAttributes(i_WheelsManufactorer, i_WheelsAirPressure);
+            setAllWheelsAttributes(i_Attributes[2], i_Attributes[3]);
+            Model = i_Attributes[4];
         }
 
         private void setAllWheelsAttributes(string i_Manufactorer, string i_AirPressure)

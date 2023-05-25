@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
-        public MotorCycle(Engine i_Engine) : base(i_Engine)
+        public MotorCycle(Engine i_Engine, string i_LicenseNumber) : base(i_Engine, i_LicenseNumber)
         {
             m_LicenseType = 0;
             m_EngineVolume = 0;
@@ -62,7 +62,7 @@ namespace Ex03.GarageLogic
             return new string[] { "LicensesType", "EngineVolume" };
         }
 
-        public override void SetUniqueAttributes(string[] i_Attributes)
+        internal override void SetUniqueAttributes(string[] i_Attributes)
         {
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
             if (eLicenseType.TryParse(i_Attributes[0], out eLicenseType licenseType) && int.TryParse(i_Attributes[1], out int engineVolume))

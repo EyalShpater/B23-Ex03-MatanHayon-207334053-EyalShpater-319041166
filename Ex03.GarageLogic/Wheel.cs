@@ -87,7 +87,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void SetAttributes(string i_ManufacturerName, string i_CurrentAirPressure)
+        internal void SetAttributes(string i_ManufacturerName, string i_CurrentAirPressure)
         {
             ManufacturerName = i_ManufacturerName;
             m_CurrentAirPressure = float.Parse(i_CurrentAirPressure);

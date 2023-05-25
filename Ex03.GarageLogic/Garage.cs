@@ -26,16 +26,17 @@ namespace Ex03.GarageLogic
             return order;
         }
 
-        public Vehicle CreateNewVehicle(int i_Type)
+        public void SetNewVehicleAttributes(string i_LicenseNumber, string[] i_UniquqAttributes, string[] i_GeneralAttributes)
         {
-            Vehicle newVehicle = VehicleFactory.CreateVehicle(i_Type);
-
-            return newVehicle;
-        }
-
-        public void SetNewVehicleAttributes(Vehicle i_Vehicle, string[] i_Attributes)
-        {
-            i_Vehicle.SetUniqueAttributes(i_Attributes);
+            if (!m_Orders.ContainsKey(i_LicenseNumber))
+            {
+                m_Orders[i_LicenseNumber].Vehicle.SetGeneralAttributes(i_GeneralAttributes);
+                m_Orders[i_LicenseNumber].Vehicle.SetUniqueAttributes(i_UniquqAttributes);
+            }
+            else
+            {
+                throw new ArgumentException("Vehicle is already exist");
+            }
         }
 
         public List<string> GetLicenseNumbersByStatus(string i_Status)
@@ -44,26 +45,25 @@ namespace Ex03.GarageLogic
 
             foreach (Order order in m_Orders.Values)
             {
-                if (order.Status.ToString().Equals(i_Status)) //debug
+                if (order.Status.ToString().Equals(i_Status)) 
                 {
                     licenseNumbers.Add(order.Vehicle.LicenseNumber);
                 }
             }
 
             return licenseNumbers;
-        }
+        } // debug
 
-        public bool ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
+        public void ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
         {
-            bool isSucceed = false;
-
             if (m_Orders.ContainsKey(i_LicenseNumber))
             {
                 m_Orders[i_LicenseNumber].Status = i_Status;
-                isSucceed = true;
             }
-            
-            return isSucceed;
+            else
+            {
+                throw new ArgumentException("Vehicle is not found!");
+            }
         }
 
         public void InflateAllWheelsToMax(string i_LicenseNumber)
