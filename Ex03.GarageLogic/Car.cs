@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -50,7 +51,8 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(k_MaxNumOfDoors, k_MinNumOfDoors);
+                    string message = $"Number of doors should be between {k_MinNumOfDoors}-{k_MaxNumOfDoors}";
+                    throw new ValueOutOfRangeException(k_MaxNumOfDoors, k_MinNumOfDoors, message);
                 }
             }
         }
@@ -72,16 +74,27 @@ Number of doors: {2}
 
         internal override void SetUniqueAttributes(string[] i_Attributes)
         {
-            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
+            int numOfDoors;
+            eColor color;
 
-            if (eColor.TryParse(i_Attributes[0], out eColor color) && int.TryParse(i_Attributes[1], out int numOfDoors))
+            ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
+            if(!eColor.TryParse(i_Attributes[0], out color))
             {
-                Color = color;
-                NumOfDoors = numOfDoors;
+                string[] colors = Enum.GetNames(typeof(eColor));
+                string message = $"Invalid color. Available colors: {string.Join(", ", colors)}";
+
+                throw new FormatException(message);
+            }
+            else if(!int.TryParse(i_Attributes[1], out numOfDoors))
+            {
+                string message = "Number of doors should be decimal digits only";
+
+                throw new FormatException(message);
             }
             else
             {
-                throw new FormatException();
+                Color = color;
+                NumOfDoors = numOfDoors;
             }
         }
     }

@@ -20,32 +20,12 @@ namespace Ex03.GarageLogic
             m_MinValue = i_MinValue;
         }
 
-        public override string Message
+        public float MaxValue
         {
             get
             {
-                string message = base.Message + "Value out of range.";
-
-                if (m_MaxValue != null)
-                {
-                    message += $" Maximum value: {m_MaxValue}.";
-                }
-
-                if (m_MinValue != null)
-                {
-                    message += $" Minimum value: {m_MinValue}.";
-                }
-
-                return message;
-            }
-        }
-
-        public float MaxValue 
-        { 
-            get 
-            { 
                 return m_MaxValue.GetValueOrDefault();
-            } 
+            }
         }
 
         public float MinValue

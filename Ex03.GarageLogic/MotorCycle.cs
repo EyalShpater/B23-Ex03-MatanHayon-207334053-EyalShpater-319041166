@@ -69,15 +69,27 @@ Engine Volume: {2}", base.ToString(), LicenseType, EngineVolume);
 
         internal override void SetUniqueAttributes(string[] i_Attributes)
         {
+            int engineVolume;
+            eLicenseType licenseType;
+
             ThrowExceptionIfNumOfGivenParametersIsDifferentFromExpected(k_NumOfAttributes, i_Attributes.Length);
-            if (eLicenseType.TryParse(i_Attributes[0], out eLicenseType licenseType) && int.TryParse(i_Attributes[1], out int engineVolume))
+            if (!eLicenseType.TryParse(i_Attributes[0], out licenseType))
             {
-                LicenseType = licenseType;
-                EngineVolume = engineVolume;
+                string[] colors = Enum.GetNames(typeof(eLicenseType));
+                string message = $"Invalid license type. Available tpyes: {string.Join(", ", colors)}";
+
+                throw new FormatException(message);
+            }
+            else if (!int.TryParse(i_Attributes[1], out engineVolume))
+            {
+                string message = "Engine volume should be decimal digits only";
+
+                throw new FormatException(message);
             }
             else
             {
-                throw new FormatException();
+                LicenseType = licenseType;
+                EngineVolume = engineVolume;
             }
         }
     }

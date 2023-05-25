@@ -13,7 +13,7 @@
             }
             else
             {
-                throw new ValueOutOfRangeException(null, 0);
+                throw new ValueOutOfRangeException(null, 0, "Engine capacity must be greater than 0");
             }
             
             m_CurrentEnergyLevel = 0;
@@ -34,7 +34,7 @@
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(r_MaxCapacity, 0, "Engine: ");
+                    throw new ValueOutOfRangeException(r_MaxCapacity, 0, $"Energy level must be between 0 to {r_MaxCapacity}");
                 }
             }
         }

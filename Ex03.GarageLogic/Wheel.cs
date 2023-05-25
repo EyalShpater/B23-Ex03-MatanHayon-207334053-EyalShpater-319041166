@@ -15,7 +15,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ValueOutOfRangeException(null, 0);
+                throw new ValueOutOfRangeException(null, 0, "Max air pressure must be greater than 0!");
             }
 
             m_ManufacturerName = null;
@@ -46,7 +46,9 @@ Max Air Pressure: {2}
                 }
                 else
                 {
-                    ValueOutOfRangeException ex = new ValueOutOfRangeException(r_MaxAirPressure, 0);
+                    string message = $"Air pressure must be between 0 and {r_MaxAirPressure}";
+
+                    throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
                 }
             }
         }
@@ -96,7 +98,7 @@ Max Air Pressure: {2}
         internal void SetAttributes(string i_ManufacturerName, string i_CurrentAirPressure)
         {
             ManufacturerName = i_ManufacturerName;
-            m_CurrentAirPressure = float.Parse(i_CurrentAirPressure);
+            CurrentAirPressure = float.Parse(i_CurrentAirPressure);
         }
     }
 }

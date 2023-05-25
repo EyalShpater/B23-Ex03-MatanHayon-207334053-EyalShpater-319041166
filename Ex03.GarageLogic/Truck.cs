@@ -81,7 +81,7 @@ Cargo Volume: {2}
             }
             else
             {
-                throw new FormatException();
+                throw new FormatException("Invalid format!");
             }
         }
     }

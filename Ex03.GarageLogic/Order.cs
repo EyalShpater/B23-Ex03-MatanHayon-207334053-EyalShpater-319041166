@@ -53,7 +53,7 @@ namespace Ex03.GarageLogic
                 }
                 else 
                 { 
-                    throw new FormatException(); 
+                    throw new FormatException("Name cannot be empty!"); 
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace Ex03.GarageLogic
                     }
                     else
                     {
-                        throw new ValueOutOfRangeException(k_PhoneNumberLength, k_PhoneNumberLength);
+                        throw new ValueOutOfRangeException(k_PhoneNumberLength, k_PhoneNumberLength, "Invalid number of digits!");
                     }
                 }
                 else

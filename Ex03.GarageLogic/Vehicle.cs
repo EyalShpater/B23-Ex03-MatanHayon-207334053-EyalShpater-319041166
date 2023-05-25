@@ -5,6 +5,8 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
+        private const int k_MaxLicenseLength = 8;
+        private const int k_MinLicenseLength = 1;
         protected string m_Model;
         protected string m_LicenseNumber;
         protected float m_EnergyLevel;
@@ -15,7 +17,7 @@ namespace Ex03.GarageLogic
         {
             m_Engine = i_Engine;
             m_Model = null;
-            m_LicenseNumber = i_LicenseNumber;
+            LicenseNumber = i_LicenseNumber;
             m_EnergyLevel = 0;
             m_Wheels = null;
         }
@@ -29,7 +31,7 @@ namespace Ex03.GarageLogic
 
             private set
             {
-                if (value.Length > 0)
+                if (value.Length > 0 && value.Length <= k_MaxLicenseLength)
                 {
                     if (int.TryParse(value, out int dummyInt))
                     {
@@ -37,12 +39,14 @@ namespace Ex03.GarageLogic
                     }
                     else
                     {
-                        throw new FormatException();
+                        throw new FormatException("License must be only digits!");
                     }
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(null, 1);
+                    string message = $"Invalid license number length, should be between {k_MinLicenseLength}-{k_MaxLicenseLength}";
+
+                    throw new ValueOutOfRangeException(k_MaxLicenseLength, 1, message);
                 }
             }
         }
@@ -70,7 +74,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(null, 1);
+                    throw new ValueOutOfRangeException(null, 1, "Model name must include at least 1 characters");
                 }
             }
         }
@@ -132,6 +136,7 @@ Energy Level: {2:p}
             if (m_Engine is FuelEngine engine)
             {
                 engine.AddFuel(i_EnergyToAdd, i_FuelType);
+                updateEnergyPercentage();
             }
             else 
             { 

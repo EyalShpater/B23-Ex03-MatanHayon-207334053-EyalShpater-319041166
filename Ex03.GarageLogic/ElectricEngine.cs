@@ -7,9 +7,9 @@
 
         }
 
-        internal void Charge(float i_EnergyToAdd)
+        internal void Charge(float i_EnergyToAddInMinutes)
         {
-            AddEnergy(i_EnergyToAdd);
+            AddEnergy(convertMinutesToHours(i_EnergyToAddInMinutes));
         }
 
         public override string ToString()
@@ -18,6 +18,11 @@
 ===============
 {0}
 ", base.ToString());
+        }
+
+        private float convertMinutesToHours(float i_Minutes)
+        {
+            return i_Minutes / 60;
         }
     }
 }

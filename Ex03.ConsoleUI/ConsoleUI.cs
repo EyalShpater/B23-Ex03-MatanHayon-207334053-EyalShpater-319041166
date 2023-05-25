@@ -190,7 +190,7 @@ Changed Status to In-Repair");
                 try
                 {
                     string licenseNumber = getLicenseNumberFromUser();
-                    float fuelAmmountToAdd = getEnergyAmountToAddFromUser();
+                    float fuelAmmountToAdd = getEnergyAmountToAddFromUser("Liters");
                     eFuelType fuelType = getFuelTypeFromUser();
 
                     m_Garage.AddFuel(licenseNumber, fuelType, fuelAmmountToAdd);
@@ -222,7 +222,7 @@ Changed Status to In-Repair");
                 try
                 {
                     string licenseNumber = getLicenseNumberFromUser();
-                    float minutesToAdd = getEnergyAmountToAddFromUser();
+                    float minutesToAdd = getEnergyAmountToAddFromUser("Minutes");
 
                     m_Garage.ChargeVehicle(licenseNumber, minutesToAdd);
                 }
@@ -311,7 +311,7 @@ Enter a number to choose an option:
             {
                 foreach (string licenseNumber in licenseNumbers)
                 {
-                    Console.WriteLine(licenseNumber);
+                    Console.WriteLine($"*** {licenseNumber} ***");
                 }
             }
         }
@@ -363,7 +363,6 @@ Enter a number to choose an option:
                     m_Garage.SetNewVehicleAttributes(i_LicenseNumber, uniqueAttributes, generalAttributes);
                     isValid = true;
                 }
-
                 catch (Exception i_Exception)
                 { 
                     Console.WriteLine(i_Exception.Message);
@@ -466,12 +465,12 @@ Enter a number to choose an option:
             return (eOrderStatus)choice;
         }
 
-        private static float getEnergyAmountToAddFromUser()
+        private static float getEnergyAmountToAddFromUser(string i_Unit)
         {
             float res;
             string input;
 
-            Console.WriteLine("Please enter wanted amount to add:");
+            Console.WriteLine($"Please enter wanted amount to add in {i_Unit}:");
             input = Console.ReadLine();
             while (!float.TryParse(input, out res))
             {

@@ -38,7 +38,7 @@ namespace Ex03.GarageLogic
             }
 
             return licenseNumbers;
-        } // debug
+        }
 
         public void ChangeVehicleStatus(string i_LicenseNumber, eOrderStatus i_Status)
         {
