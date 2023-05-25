@@ -38,6 +38,7 @@ Max Air Pressure: {2}
             { 
                 return m_CurrentAirPressure; 
             }
+
             private set
             {
                 if (value <= r_MaxAirPressure && value >= 0)

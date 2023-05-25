@@ -112,11 +112,11 @@ Status: {2}
             return m_Vehicle.GetHashCode();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object i_Object)
         {
             bool isEqual = false;
 
-            if (obj is Order order)
+            if (i_Object is Order order)
             {
                 isEqual = order.GetHashCode() == this.GetHashCode();
             }
