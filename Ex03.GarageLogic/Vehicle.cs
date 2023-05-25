@@ -124,6 +124,7 @@ Energy Level: {2:p}
             if (m_Engine is ElectricEngine engine)
             {
                 engine.Charge(i_EnergyToAdd);
+                updateEnergyPercentage();
             }
             else
             {
