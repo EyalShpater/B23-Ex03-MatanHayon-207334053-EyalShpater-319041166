@@ -298,11 +298,11 @@ Enter a number to choose an option:
             }
         }
 
-        private void displayVehiclesByStatus(eOrderStatus status)
+        private void displayVehiclesByStatus(eOrderStatus i_Status)
         {
-            List<string> licenseNumbers = m_Garage.GetLicenseNumbersByStatus(status.ToString());
+            List<string> licenseNumbers = m_Garage.GetLicenseNumbersByStatus(i_Status.ToString());
 
-            Console.WriteLine($"Vehicles with status '{status}':");
+            Console.WriteLine($"Vehicles with status '{i_Status}':");
             if (licenseNumbers.Count == 0)
             {
                 Console.WriteLine("No vehicles with the specified status found.");
